@@ -1,5 +1,8 @@
 package com.example.ui.screens
 
+import com.example.R
+import androidx.compose.ui.res.stringResource
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
@@ -76,13 +79,13 @@ fun HistoryScreen(
         ) {
             Column {
                 Text(
-                    text = "Transfer History Log",
+                    text = stringResource(R.string.history_log_title),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
-                    text = "Log of files received via Web Portal.",
+                    text = stringResource(R.string.history_log_desc),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.secondary
                 )
@@ -102,12 +105,12 @@ fun HistoryScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = "Clear History",
+                            contentDescription = stringResource(R.string.clear_log),
                             tint = Color(0xFFEF4444),
                             modifier = Modifier.size(14.dp)
                         )
                         Text(
-                            text = "Clear Log",
+                            text = stringResource(R.string.clear_log),
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFFEF4444)
@@ -144,7 +147,7 @@ fun HistoryScreen(
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "No transfer history recorded yet",
+                        text = stringResource(R.string.no_history_recorded),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.secondary
@@ -231,7 +234,7 @@ fun HistoryScreen(
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
-                                        text = "$formattedSize • From ${item.clientIp} • $formattedDate",
+                                        text = stringResource(R.string.from_client_date, item.clientIp, formattedDate) + " • $formattedSize",
                                         fontSize = 11.sp,
                                         color = MaterialTheme.colorScheme.secondary
                                     )
@@ -264,7 +267,7 @@ fun HistoryScreen(
                                     .padding(horizontal = 12.dp, vertical = 6.dp)
                             ) {
                                 Text(
-                                    text = "Open",
+                                    text = stringResource(R.string.open),
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onPrimary

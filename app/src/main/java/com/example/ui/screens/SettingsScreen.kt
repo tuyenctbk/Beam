@@ -1,5 +1,8 @@
 package com.example.ui.screens
 
+import com.example.R
+import androidx.compose.ui.res.stringResource
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -105,14 +108,14 @@ fun SettingsScreen(
 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "TV Settings & Preferences",
+                            text = stringResource(R.string.settings_pref_title),
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Customize high-contrast dark mode, storage auto-cleanup (>30 days), and TV preferences.",
+                            text = stringResource(R.string.settings_pref_desc),
                             fontSize = 13.sp,
                             color = Color(0xFF94A3B8)
                         )

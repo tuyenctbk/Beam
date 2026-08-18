@@ -38,7 +38,17 @@ import com.example.ui.theme.BeamError
 import com.example.ui.theme.BeamErrorBg
 import com.example.ui.theme.BeamOnBackground
 import com.example.ui.theme.BeamPrimary
+import com.example.ui.theme.BeamPrimaryContainer
 import com.example.ui.theme.BeamSecondary
+
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.focusable
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 @Composable
 fun ConfirmDeleteModal(
@@ -47,6 +57,12 @@ fun ConfirmDeleteModal(
     onDismiss: () -> Unit
 ) {
     if (fileItem == null) return
+
+    var isCancelFocused by remember { mutableStateOf(false) }
+    var isDeleteFocused by remember { mutableStateOf(false) }
+
+    val cancelScale by animateFloatAsState(targetValue = if (isCancelFocused) 1.05f else 1.0f, label = "cancelScale")
+    val deleteScale by animateFloatAsState(targetValue = if (isDeleteFocused) 1.05f else 1.0f, label = "deleteScale")
 
     Dialog(onDismissRequest = onDismiss) {
         Box(
@@ -117,8 +133,19 @@ fun ConfirmDeleteModal(
                     Box(
                         modifier = Modifier
                             .weight(1f)
+                            .graphicsLayer {
+                                scaleX = cancelScale
+                                scaleY = cancelScale
+                            }
                             .clip(RoundedCornerShape(16.dp))
-                            .background(Color(0xFFF1F5F9))
+                            .background(if (isCancelFocused) BeamPrimaryContainer else Color(0xFFF1F5F9))
+                            .border(
+                                if (isCancelFocused) 2.dp else 1.dp,
+                                if (isCancelFocused) BeamPrimary else Color.Transparent,
+                                RoundedCornerShape(16.dp)
+                            )
+                            .onFocusChanged { isCancelFocused = it.isFocused }
+                            .focusable()
                             .clickable { onDismiss() }
                             .padding(vertical = 12.dp)
                             .testTag("cancel_delete_btn"),
@@ -128,7 +155,7 @@ fun ConfirmDeleteModal(
                             text = stringResource(R.string.cancel),
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
-                            color = BeamSecondary
+                            color = if (isCancelFocused) BeamPrimary else BeamSecondary
                         )
                     }
 
@@ -136,8 +163,19 @@ fun ConfirmDeleteModal(
                     Box(
                         modifier = Modifier
                             .weight(1f)
+                            .graphicsLayer {
+                                scaleX = deleteScale
+                                scaleY = deleteScale
+                            }
                             .clip(RoundedCornerShape(16.dp))
                             .background(BeamError)
+                            .border(
+                                if (isDeleteFocused) 2.dp else 1.dp,
+                                if (isDeleteFocused) Color.White else Color.Transparent,
+                                RoundedCornerShape(16.dp)
+                            )
+                            .onFocusChanged { isDeleteFocused = it.isFocused }
+                            .focusable()
                             .clickable { onConfirm() }
                             .padding(vertical = 12.dp)
                             .testTag("confirm_delete_btn"),

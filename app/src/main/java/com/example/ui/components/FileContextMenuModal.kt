@@ -45,6 +45,14 @@ import com.example.ui.theme.BeamOnBackground
 import com.example.ui.theme.BeamPrimary
 import com.example.ui.theme.BeamPrimaryContainer
 import com.example.ui.theme.BeamSecondary
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.focusable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.graphicsLayer
 
 @Composable
 fun FileContextMenuModal(
@@ -103,7 +111,7 @@ fun FileContextMenuModal(
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "${fileItem.category.label} • ${fileItem.formattedSize}",
+                            text = "${stringResource(fileItem.category.labelResId)} • ${fileItem.formattedSize}",
                             fontSize = 12.sp,
                             color = BeamSecondary
                         )
@@ -195,12 +203,25 @@ private fun ContextMenuItemRow(
     onClick: () -> Unit,
     tag: String
 ) {
+    var isFocused by remember { mutableStateOf(false) }
+    val scale by animateFloatAsState(targetValue = if (isFocused) 1.025f else 1.0f, label = "rowScale")
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
             .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFFF8FAFC))
-            .border(1.dp, Color(0xFFF1F5F9), RoundedCornerShape(16.dp))
+            .background(if (isFocused) BeamPrimaryContainer.copy(alpha = 0.4f) else Color(0xFFF8FAFC))
+            .border(
+                if (isFocused) 2.dp else 1.dp,
+                if (isFocused) BeamPrimary else Color(0xFFF1F5F9),
+                RoundedCornerShape(16.dp)
+            )
+            .onFocusChanged { isFocused = it.isFocused }
+            .focusable()
             .clickable { onClick() }
             .padding(12.dp)
             .testTag(tag)

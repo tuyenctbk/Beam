@@ -14,6 +14,8 @@ import com.example.data.db.AppDatabase
 import com.example.data.db.ClipEntity
 import com.example.data.db.TransferEntity
 import com.example.server.BeamWebServer
+import com.example.ui.components.TvToast
+import com.example.ui.components.TvToastType
 import com.example.util.ApkParser
 import com.example.util.FileOpener
 import com.example.util.NetworkType
@@ -81,12 +83,21 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
     val remoteClips: StateFlow<List<ClipEntity>> = dao.getAllClips()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    // Storage
+    // Storage Management & Low Capacity Detection (< 10%)
     private val _storageVolumes = MutableStateFlow<List<StorageVolumeInfo>>(emptyList())
     val storageVolumes: StateFlow<List<StorageVolumeInfo>> = _storageVolumes.asStateFlow()
 
     private val _selectedStorageIndex = MutableStateFlow(0)
     val selectedStorageIndex: StateFlow<Int> = _selectedStorageIndex.asStateFlow()
+
+    private val _isLowStorage = MutableStateFlow(false)
+    val isLowStorage: StateFlow<Boolean> = _isLowStorage.asStateFlow()
+
+    private val _appCacheSizeBytes = MutableStateFlow(0L)
+    val appCacheSizeBytes: StateFlow<Long> = _appCacheSizeBytes.asStateFlow()
+
+    private val _largeFiles = MutableStateFlow<List<FileItem>>(emptyList())
+    val largeFiles: StateFlow<List<FileItem>> = _largeFiles.asStateFlow()
 
     // File Explorer & Batch Selection
     private val _currentDirectory = MutableStateFlow<File>(StorageUtils.getDefaultDownloadDir(application))
@@ -110,8 +121,25 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
     private val _selectedFilePaths = MutableStateFlow<Set<String>>(emptySet())
     val selectedFilePaths: StateFlow<Set<String>> = _selectedFilePaths.asStateFlow()
 
-    private val _recentNotification = MutableStateFlow<String?>(null)
-    val recentNotification: StateFlow<String?> = _recentNotification.asStateFlow()
+    // TV-Grade Toast Notifications
+    private val _tvToast = MutableStateFlow<TvToast?>(null)
+    val tvToast: StateFlow<TvToast?> = _tvToast.asStateFlow()
+
+    fun showTvToast(title: String, message: String, type: TvToastType, durationMs: Long = 4500L) {
+        _tvToast.value = TvToast(
+            id = System.currentTimeMillis(),
+            title = title,
+            message = message,
+            type = type,
+            durationMs = durationMs
+        )
+        _recentNotification.value = message
+    }
+
+    fun dismissTvToast() {
+        _tvToast.value = null
+        _recentNotification.value = null
+    }
 
     // Preferences
     private val prefs = application.getSharedPreferences("beam_app_prefs", Context.MODE_PRIVATE)
@@ -318,10 +346,20 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         viewModelScope.launch {
+            var wasLocalNetworkOk: Boolean? = null
             NetworkUtils.observeNetworkState(application).collect { netType ->
                 _networkType.value = netType
                 val isLocalOk = (netType == NetworkType.WIFI || netType == NetworkType.ETHERNET)
                 _isLocalNetworkAvailable.value = isLocalOk
+
+                if (wasLocalNetworkOk == true && !isLocalOk) {
+                    showTvToast(
+                        title = "Connection Lost",
+                        message = "Local Wi-Fi disconnected. Beam server paused.",
+                        type = TvToastType.NETWORK
+                    )
+                }
+                wasLocalNetworkOk = isLocalOk
 
                 if (!isLocalOk) {
                     _networkWarning.value = if (netType == NetworkType.CELLULAR) {
@@ -393,21 +431,37 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
                     )
                     dao.insertTransfer(entity)
 
-                    if (checksumStatus.contains("CORRUPTED", ignoreCase = true)) {
-                        _recentNotification.value = "⚠️ File ${file.name} corrupted! Checksum mismatch."
+                    val isCorrupted = checksumStatus.contains("CORRUPTED", ignoreCase = true)
+                    if (isCorrupted) {
+                        showTvToast(
+                            title = "Transfer Failed",
+                            message = "Integrity mismatch detected for ${file.name}",
+                            type = TvToastType.ERROR
+                        )
                     } else {
-                        _recentNotification.value = "Received: ${file.name} (SHA-256 Verified)"
+                        val sizeFormatted = StorageUtils.formatBytes(file.length())
+                        val statusTag = if (checksumStatus.contains("Verified", ignoreCase = true)) "SHA-256 Verified" else "Verified"
+                        showTvToast(
+                            title = "Transfer Complete",
+                            message = "${file.name} ($statusTag • $sizeFormatted)",
+                            type = TvToastType.TRANSFER
+                        )
                     }
 
                     checkSmartPromptsAfterTransfer()
                     refreshFileList()
+                    refreshStorageVolumes()
                 }
             },
             onRemoteClipReceived = { text, clientIp ->
                 viewModelScope.launch {
                     val entity = ClipEntity(text = text, clientIp = clientIp)
                     dao.insertClip(entity)
-                    _recentNotification.value = "Remote Clip: $text"
+                    showTvToast(
+                        title = "Clipboard Beamed",
+                        message = "Text from $clientIp copied to TV clipboard",
+                        type = TvToastType.SUCCESS
+                    )
                     // Also auto copy to TV clipboard for seamless input
                     withContext(Dispatchers.Main) {
                         FileOpener.copyToClipboard(getApplication(), text)
@@ -434,7 +488,56 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshStorageVolumes() {
-        _storageVolumes.value = StorageUtils.getStorageVolumes(getApplication())
+        viewModelScope.launch(Dispatchers.IO) {
+            val volumes = StorageUtils.getStorageVolumes(getApplication())
+            _storageVolumes.value = volumes
+
+            // Detect low capacity (< 10% free on internal or primary volume)
+            val primary = volumes.firstOrNull { !it.isUsb } ?: volumes.firstOrNull()
+            if (primary != null && primary.totalBytes > 0L) {
+                val ratio = primary.freeBytes.toDouble() / primary.totalBytes.toDouble()
+                _isLowStorage.value = (ratio < 0.10)
+            } else {
+                _isLowStorage.value = false
+            }
+
+            refreshCacheAndLargeFiles()
+        }
+    }
+
+    fun refreshCacheAndLargeFiles() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _appCacheSizeBytes.value = StorageUtils.getAppCacheSize(getApplication())
+            val downloadDir = StorageUtils.getDefaultDownloadDir(getApplication())
+            val largest = StorageUtils.getLargestFiles(downloadDir, limit = 8).map { file ->
+                if (file.extension.equals("apk", ignoreCase = true)) {
+                    ApkParser.parseApk(getApplication(), file)
+                } else {
+                    FileItem(file = file)
+                }
+            }
+            _largeFiles.value = largest
+        }
+    }
+
+    fun clearAppCache() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val freedBytes = StorageUtils.clearAppCache(getApplication())
+            val freedFormatted = StorageUtils.formatBytes(freedBytes)
+            refreshStorageVolumes()
+            showTvToast(
+                title = "Storage Cleaned",
+                message = "Cache cleared! Freed $freedFormatted of temporary data.",
+                type = TvToastType.SUCCESS
+            )
+            com.example.util.FirebaseManager.logUserAction("cache_cleared_freed", freedFormatted)
+        }
+    }
+
+    suspend fun getTransferRecord(filePath: String): TransferEntity? {
+        return withContext(Dispatchers.IO) {
+            dao.getTransferByPath(filePath) ?: dao.getTransferByFileName(File(filePath).name)
+        }
     }
 
     fun selectStorageVolume(index: Int) {
@@ -531,10 +634,18 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
             if (source.exists()) {
                 val destination = File(source.parentFile, newName)
                 if (!destination.exists() && source.renameTo(destination)) {
-                    _recentNotification.value = "Renamed to $newName"
+                    showTvToast(
+                        title = "File Renamed",
+                        message = "${fileItem.name} renamed to $newName",
+                        type = TvToastType.INFO
+                    )
                     refreshFileList()
                 } else {
-                    _recentNotification.value = "Failed to rename file"
+                    showTvToast(
+                        title = "Rename Failed",
+                        message = "Could not rename ${fileItem.name}",
+                        type = TvToastType.ERROR
+                    )
                 }
             }
         }
@@ -546,17 +657,29 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
             if (source.exists() && targetDirectory.exists()) {
                 val destination = File(targetDirectory, source.name)
                 if (source.renameTo(destination)) {
-                    _recentNotification.value = "Moved ${fileItem.name}"
+                    showTvToast(
+                        title = "File Moved",
+                        message = "${fileItem.name} relocated to ${targetDirectory.name}",
+                        type = TvToastType.INFO
+                    )
                     refreshFileList()
                 } else {
                     // Try copy and delete fallback
                     try {
                         source.copyTo(destination, overwrite = true)
                         source.delete()
-                        _recentNotification.value = "Moved ${fileItem.name}"
+                        showTvToast(
+                            title = "File Moved",
+                            message = "${fileItem.name} relocated to ${targetDirectory.name}",
+                            type = TvToastType.INFO
+                        )
                         refreshFileList()
                     } catch (_: Exception) {
-                        _recentNotification.value = "Failed to move file"
+                        showTvToast(
+                            title = "Move Failed",
+                            message = "Could not move ${fileItem.name}",
+                            type = TvToastType.ERROR
+                        )
                     }
                 }
             }
@@ -566,13 +689,25 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteFile(fileItem: FileItem) {
         viewModelScope.launch(Dispatchers.IO) {
             if (fileItem.file.exists()) {
-                if (fileItem.isDirectory) {
+                val success = if (fileItem.isDirectory) {
                     fileItem.file.deleteRecursively()
                 } else {
                     fileItem.file.delete()
                 }
-                _recentNotification.value = "Deleted ${fileItem.name}"
-                refreshFileList()
+                if (success) {
+                    showTvToast(
+                        title = "File Deleted",
+                        message = "${fileItem.name} removed permanently",
+                        type = TvToastType.DELETE
+                    )
+                    refreshFileList()
+                } else {
+                    showTvToast(
+                        title = "Delete Failed",
+                        message = "Could not delete ${fileItem.name}",
+                        type = TvToastType.ERROR
+                    )
+                }
             }
         }
     }
@@ -580,12 +715,39 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
     fun clearHistory() {
         viewModelScope.launch {
             dao.clearHistory()
+            showTvToast(
+                title = "Log Cleared",
+                message = "Transfer history cleared",
+                type = TvToastType.INFO
+            )
         }
     }
 
     fun deleteClip(id: Long) {
         viewModelScope.launch {
             dao.deleteClip(id)
+        }
+    }
+
+    fun recordFileAccess(file: File) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                if (file.exists() && file.isFile) {
+                    val category = FileItem.determineCategory(file)
+                    val entity = TransferEntity(
+                        fileName = file.name,
+                        filePath = file.absolutePath,
+                        fileSize = file.length(),
+                        clientIp = "TV Access",
+                        category = category.name,
+                        timestamp = System.currentTimeMillis(),
+                        checksumStatus = "Accessed"
+                    )
+                    dao.insertTransfer(entity)
+                }
+            } catch (e: Exception) {
+                // Ignore
+            }
         }
     }
 
@@ -663,16 +825,26 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             val paths = _selectedFilePaths.value
             var count = 0
+            var freedBytes = 0L
             paths.forEach { path ->
                 val file = File(path)
                 if (file.exists()) {
-                    if (file.isDirectory) file.deleteRecursively() else file.delete()
-                    count++
+                    val size = if (file.isDirectory) 0L else file.length()
+                    val deleted = if (file.isDirectory) file.deleteRecursively() else file.delete()
+                    if (deleted) {
+                        count++
+                        freedBytes += size
+                    }
                 }
             }
             _selectedFilePaths.value = emptySet()
             _isBatchMode.value = false
-            _recentNotification.value = "Deleted $count selected items"
+            val freedFormatted = StorageUtils.formatBytes(freedBytes)
+            showTvToast(
+                title = "Files Deleted",
+                message = "Deleted $count files ($freedFormatted freed)",
+                type = TvToastType.DELETE
+            )
             refreshFileList()
         }
     }
@@ -698,13 +870,18 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
             }
             _selectedFilePaths.value = emptySet()
             _isBatchMode.value = false
-            _recentNotification.value = "Moved $count items to ${targetDirectory.name}"
+            showTvToast(
+                title = "Files Relocated",
+                message = "Moved $count items to ${targetDirectory.name}",
+                type = TvToastType.INFO
+            )
             refreshFileList()
         }
     }
 
     fun dismissNotification() {
         _recentNotification.value = null
+        _tvToast.value = null
     }
 
     override fun onCleared() {

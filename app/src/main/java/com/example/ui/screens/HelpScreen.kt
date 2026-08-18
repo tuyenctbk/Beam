@@ -1,5 +1,8 @@
 package com.example.ui.screens
 
+import com.example.R
+import androidx.compose.ui.res.stringResource
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
@@ -207,14 +210,14 @@ fun HelpScreen(
 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "Quick Connection Guide",
+                            text = stringResource(R.string.quick_guide_title),
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Learn how to send files wirelessly to your Android TV in 5 easy steps. Tap to show connection QR code.",
+                            text = stringResource(R.string.quick_guide_desc),
                             fontSize = 13.sp,
                             color = Color(0xFF94A3B8)
                         )
@@ -235,7 +238,7 @@ fun HelpScreen(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "Go to QR Code",
+                                text = stringResource(R.string.go_to_qr),
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = if (isHeaderFocused) Color(0xFF0F172A) else Color.White

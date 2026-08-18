@@ -1,5 +1,8 @@
 package com.example.ui.screens
 
+import com.example.R
+import androidx.compose.ui.res.stringResource
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -69,14 +72,14 @@ fun AboutModal(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    text = "Beam — Simple File Transfer",
+                    text = stringResource(R.string.about_title),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = BeamOnBackground
                 )
 
                 Text(
-                    text = "Version 1.0 • Ad-Free Android TV Utility",
+                    text = stringResource(R.string.about_subtitle),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     color = BeamSecondary,
@@ -95,14 +98,14 @@ fun AboutModal(
                 ) {
                     Column {
                         Text(
-                            text = "What's New in V1.0",
+                            text = stringResource(R.string.whats_new_title),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
                             color = BeamPrimary
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Initial release featuring high-speed Web-to-TV transfers, built-in File Manager, direct USB storage support, and Remote Keyboard input.",
+                            text = stringResource(R.string.whats_new_desc),
                             fontSize = 12.sp,
                             color = BeamSecondary,
                             lineHeight = 16.sp
@@ -121,14 +124,14 @@ fun AboutModal(
                 ) {
                     Column {
                         Text(
-                            text = "100% Private & Local",
+                            text = stringResource(R.string.private_local_title),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
                             color = BeamPrimary
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Your files never leave your local home network. No cloud storage, tracking, or external accounts required.",
+                            text = stringResource(R.string.private_local_desc),
                             fontSize = 12.sp,
                             color = BeamSecondary,
                             lineHeight = 16.sp
@@ -144,7 +147,7 @@ fun AboutModal(
                     colors = ButtonDefaults.buttonColors(containerColor = BeamPrimary),
                     modifier = Modifier.fillMaxWidth().height(48.dp)
                 ) {
-                    Text("Close", fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.close), fontWeight = FontWeight.Bold)
                 }
             }
         }

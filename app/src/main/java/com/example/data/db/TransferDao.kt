@@ -11,6 +11,12 @@ interface TransferDao {
     @Query("SELECT * FROM transfers ORDER BY timestamp DESC")
     fun getAllTransfers(): Flow<List<TransferEntity>>
 
+    @Query("SELECT * FROM transfers WHERE filePath = :filePath ORDER BY timestamp DESC LIMIT 1")
+    suspend fun getTransferByPath(filePath: String): TransferEntity?
+
+    @Query("SELECT * FROM transfers WHERE fileName = :fileName ORDER BY timestamp DESC LIMIT 1")
+    suspend fun getTransferByFileName(fileName: String): TransferEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransfer(transfer: TransferEntity): Long
 

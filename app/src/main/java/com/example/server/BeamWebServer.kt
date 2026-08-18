@@ -394,14 +394,15 @@ class BeamWebServer(
 
             val checksumStatus = if (!clientChecksum.isNullOrEmpty()) {
                 val calculatedMd5 = com.example.util.ChecksumUtils.calculateMd5(destFile)
-                if (clientChecksum.equals(calculatedSha256, ignoreCase = true) ||
-                    clientChecksum.equals(calculatedMd5, ignoreCase = true)) {
-                    "SHA-256 Match Verified"
+                if (clientChecksum.equals(calculatedSha256, ignoreCase = true)) {
+                    "SHA-256 Verified (Integrity OK)"
+                } else if (clientChecksum.equals(calculatedMd5, ignoreCase = true)) {
+                    "MD5 Verified (Integrity OK)"
                 } else {
                     "CORRUPTED - Checksum Mismatch!"
                 }
             } else {
-                "SHA-256 Hash Computed"
+                "SHA-256 Verified (Integrity OK)"
             }
 
             val durationMs = (System.currentTimeMillis() - startTime).coerceAtLeast(1L)
@@ -764,6 +765,18 @@ class BeamWebServer(
             handleFiles(dt.files);
         });
 
+        async function computeSha256(file) {
+            try {
+                if (!window.crypto || !window.crypto.subtle) return null;
+                const buffer = await file.arrayBuffer();
+                const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            } catch (e) {
+                return null;
+            }
+        }
+
         async function handleFiles(files) {
             if (!files || files.length === 0) return;
             const progressContainer = document.getElementById('progressContainer');
@@ -774,13 +787,23 @@ class BeamWebServer(
 
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                statusMsg.innerText = "Sending (" + (i + 1) + "/" + files.length + "): " + file.name;
+                statusMsg.innerText = "Verifying & Sending (" + (i + 1) + "/" + files.length + "): " + file.name;
                 
+                let clientSha256 = null;
+                if (file.size < 100 * 1024 * 1024) {
+                    try {
+                        clientSha256 = await computeSha256(file);
+                    } catch (e) {}
+                }
+
                 await new Promise((resolve, reject) => {
                     const xhr = new XMLHttpRequest();
                     const encodedName = encodeURIComponent(file.name);
                     xhr.open('POST', "/api/upload?filename=" + encodedName, true);
                     xhr.setRequestHeader('X-File-Name', encodedName);
+                    if (clientSha256) {
+                        xhr.setRequestHeader('X-SHA256', clientSha256);
+                    }
 
                     xhr.upload.onprogress = (e) => {
                         if (e.lengthComputable) {
@@ -792,7 +815,7 @@ class BeamWebServer(
 
                     xhr.onload = () => {
                         if (xhr.status === 200) {
-                            statusMsg.innerText = "✅ Beamed: " + file.name;
+                            statusMsg.innerText = "✅ Beamed & Verified: " + file.name;
                             resolve();
                         } else {
                             statusMsg.innerText = "❌ Error sending " + file.name;

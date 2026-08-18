@@ -103,14 +103,14 @@ fun RemoteInputScreen(
 
                 Column {
                     Text(
-                        text = "Remote Keyboard & Clipboard",
+                        text = stringResource(R.string.remote_screen_title),
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "Type text, passwords, or URLs on your phone or PC web browser to beam directly to TV.",
+                        text = stringResource(R.string.remote_screen_desc),
                         fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.secondary
                     )
@@ -121,7 +121,7 @@ fun RemoteInputScreen(
         Spacer(modifier = Modifier.height(14.dp))
 
         Text(
-            text = "RECEIVED TEXT & CLIPS",
+            text = stringResource(R.string.received_text_clips),
             fontSize = 11.sp,
             fontWeight = FontWeight.Bold,
             letterSpacing = 1.2.sp,
@@ -146,7 +146,7 @@ fun RemoteInputScreen(
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "No remote clips received yet.\nOpen the Web Portal on your phone to send text!",
+                        text = stringResource(R.string.no_clips_received),
                         fontSize = 13.sp,
                         color = MaterialTheme.colorScheme.secondary,
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -200,7 +200,7 @@ fun RemoteInputScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = "From ${clip.clientIp} • $formattedDate",
+                                    text = stringResource(R.string.from_client_date, clip.clientIp, formattedDate),
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     color = MaterialTheme.colorScheme.secondary
@@ -264,7 +264,7 @@ fun RemoteInputScreen(
                                             modifier = Modifier.size(14.dp)
                                         )
                                         Text(
-                                            text = "Copy",
+                                            text = stringResource(R.string.copy),
                                             fontSize = 12.sp,
                                             fontWeight = FontWeight.Bold,
                                             color = MaterialTheme.colorScheme.onPrimary
@@ -300,7 +300,7 @@ fun RemoteInputScreen(
                                                 modifier = Modifier.size(14.dp)
                                             )
                                             Text(
-                                                text = "Open Link",
+                                                text = stringResource(R.string.open_link),
                                                 fontSize = 12.sp,
                                                 fontWeight = FontWeight.Bold,
                                                 color = MaterialTheme.colorScheme.onPrimaryContainer

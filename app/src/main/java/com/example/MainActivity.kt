@@ -217,7 +217,10 @@ fun MainAppScreen(viewModel: BeamViewModel) {
                             storageVolumes = storageVolumes,
                             isLocalNetworkAvailable = isLocalNetworkAvailable,
                             onTabSelected = { activeTab = it },
-                            onOpenFile = { item -> FileOpener.openFile(context, item.file) }
+                            onOpenFile = { item ->
+                                viewModel.recordFileAccess(item.file)
+                                FileOpener.openFile(context, item.file)
+                            }
                         )
                     }
 
@@ -239,6 +242,7 @@ fun MainAppScreen(viewModel: BeamViewModel) {
                                 if (item.isDirectory) {
                                     viewModel.navigateToDirectory(item.file)
                                 } else {
+                                    viewModel.recordFileAccess(item.file)
                                     FileOpener.openFile(context, item.file)
                                 }
                             },

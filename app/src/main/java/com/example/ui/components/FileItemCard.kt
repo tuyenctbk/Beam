@@ -58,6 +58,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.R
 import com.example.data.FileCategory
 import com.example.data.FileItem
@@ -170,7 +172,7 @@ fun FileItemCard(
                     }
                 }
 
-                // Icon Box
+                // Icon / Photo Thumbnail Box using Coil
                 Box(
                     modifier = Modifier
                         .size(46.dp)
@@ -178,19 +180,35 @@ fun FileItemCard(
                         .background(iconBgColor),
                     contentAlignment = Alignment.Center
                 ) {
-                    if (apkDrawable != null) {
-                        Image(
-                            bitmap = apkDrawable.toBitmap().asImageBitmap(),
-                            contentDescription = item.apkAppName ?: item.name,
-                            modifier = Modifier.size(32.dp)
-                        )
-                    } else {
-                        Icon(
-                            imageVector = categoryIcon,
-                            contentDescription = stringResource(item.category.labelResId),
-                            tint = iconTint,
-                            modifier = Modifier.size(24.dp)
-                        )
+                    when {
+                        item.category == FileCategory.PHOTOS -> {
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(item.file)
+                                    .crossfade(true)
+                                    .build(),
+                                contentDescription = item.name,
+                                contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+                                modifier = Modifier
+                                    .size(46.dp)
+                                    .clip(RoundedCornerShape(14.dp))
+                            )
+                        }
+                        apkDrawable != null -> {
+                            Image(
+                                bitmap = apkDrawable.toBitmap().asImageBitmap(),
+                                contentDescription = item.apkAppName ?: item.name,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
+                        else -> {
+                            Icon(
+                                imageVector = categoryIcon,
+                                contentDescription = stringResource(item.category.labelResId),
+                                tint = iconTint,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
                 }
 

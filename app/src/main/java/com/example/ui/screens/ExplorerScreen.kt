@@ -79,6 +79,9 @@ import com.example.ui.theme.BeamPrimaryContainer
 import com.example.ui.theme.BeamSecondary
 import java.io.File
 
+import androidx.compose.foundation.focusable
+import androidx.compose.ui.graphics.graphicsLayer
+
 @Composable
 fun ExplorerScreen(
     fileItems: List<FileItem>,
@@ -118,6 +121,7 @@ fun ExplorerScreen(
             .padding(horizontal = 20.dp)
     ) {
         // Search bar with real-time text input and instant clear
+        var isSearchFocused by remember { mutableStateOf(false) }
         OutlinedTextField(
             value = searchQuery,
             onValueChange = onSearchQueryChanged,
@@ -126,7 +130,7 @@ fun ExplorerScreen(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = stringResource(R.string.search),
-                    tint = BeamSecondary
+                    tint = if (isSearchFocused) BeamPrimary else BeamSecondary
                 )
             },
             trailingIcon = {
@@ -152,6 +156,7 @@ fun ExplorerScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 10.dp)
+                .onFocusChanged { isSearchFocused = it.isFocused }
                 .testTag("search_text_field"),
             shape = RoundedCornerShape(18.dp),
             colors = OutlinedTextFieldDefaults.colors(
@@ -178,16 +183,25 @@ fun ExplorerScreen(
                         fileItems.count { item -> item.category == category }
                     }
                 }
+                var isChipFocused by remember { mutableStateOf(false) }
 
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(16.dp))
-                        .background(if (isSelected) BeamPrimaryContainer else Color.White)
+                        .background(
+                            when {
+                                isChipFocused -> BeamPrimaryContainer
+                                isSelected -> BeamPrimaryContainer
+                                else -> Color.White
+                            }
+                        )
                         .border(
-                            1.dp,
-                            if (isSelected) BeamPrimary else Color(0xFFE2E8F0),
+                            if (isChipFocused) 2.dp else 1.dp,
+                            if (isChipFocused || isSelected) BeamPrimary else Color(0xFFE2E8F0),
                             RoundedCornerShape(16.dp)
                         )
+                        .onFocusChanged { isChipFocused = it.isFocused }
+                        .focusable()
                         .clickable { onCategorySelected(category) }
                         .padding(horizontal = 14.dp, vertical = 7.dp)
                         .testTag("category_chip_${category.name.lowercase()}")
@@ -199,22 +213,22 @@ fun ExplorerScreen(
                         Text(
                             text = stringResource(category.labelResId),
                             fontSize = 12.sp,
-                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                            color = if (isSelected) BeamOnPrimaryContainer else BeamSecondary
+                            fontWeight = if (isSelected || isChipFocused) FontWeight.Bold else FontWeight.Medium,
+                            color = if (isSelected || isChipFocused) BeamOnPrimaryContainer else BeamSecondary
                         )
 
                         if (categoryCount > 0) {
                             Box(
                                 modifier = Modifier
                                     .clip(CircleShape)
-                                    .background(if (isSelected) BeamPrimary else Color(0xFFF1F5F9))
+                                    .background(if (isSelected || isChipFocused) BeamPrimary else Color(0xFFF1F5F9))
                                     .padding(horizontal = 6.dp, vertical = 2.dp)
                             ) {
                                 Text(
                                     text = "$categoryCount",
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = if (isSelected) Color.White else BeamSecondary
+                                    color = if (isSelected || isChipFocused) Color.White else BeamSecondary
                                 )
                             }
                         }
@@ -257,11 +271,25 @@ fun ExplorerScreen(
                 ) {
                     items(FileSortOption.entries) { option ->
                         val isSelected = option == selectedSortOption
+                        var isSortFocused by remember { mutableStateOf(false) }
+
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(12.dp))
-                                .background(if (isSelected) BeamPrimary else Color.White)
-                                .border(1.dp, if (isSelected) BeamPrimary else Color(0xFFE2E8F0), RoundedCornerShape(12.dp))
+                                .background(
+                                    when {
+                                        isSortFocused -> BeamPrimaryContainer
+                                        isSelected -> BeamPrimary
+                                        else -> Color.White
+                                    }
+                                )
+                                .border(
+                                    if (isSortFocused) 2.dp else 1.dp,
+                                    if (isSortFocused || isSelected) BeamPrimary else Color(0xFFE2E8F0),
+                                    RoundedCornerShape(12.dp)
+                                )
+                                .onFocusChanged { isSortFocused = it.isFocused }
+                                .focusable()
                                 .clickable { onSortSelected(option) }
                                 .padding(horizontal = 10.dp, vertical = 5.dp)
                                 .testTag("sort_chip_${option.name.lowercase()}")
@@ -269,8 +297,8 @@ fun ExplorerScreen(
                             Text(
                                 text = stringResource(option.labelResId),
                                 fontSize = 11.sp,
-                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                color = if (isSelected) Color.White else BeamSecondary
+                                fontWeight = if (isSelected || isSortFocused) FontWeight.Bold else FontWeight.Normal,
+                                color = if (isSelected && !isSortFocused) Color.White else if (isSortFocused) BeamOnPrimaryContainer else BeamSecondary
                             )
                         }
                     }
@@ -280,11 +308,18 @@ fun ExplorerScreen(
             Spacer(modifier = Modifier.width(8.dp))
 
             // Batch Selection Toggle Button
+            var isBatchToggleFocused by remember { mutableStateOf(false) }
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(14.dp))
-                    .background(if (isBatchMode) Color(0xFFDCFCE7) else Color.White)
-                    .border(1.dp, if (isBatchMode) Color(0xFF16A34A) else Color(0xFFE2E8F0), RoundedCornerShape(14.dp))
+                    .background(if (isBatchMode) Color(0xFFDCFCE7) else if (isBatchToggleFocused) BeamPrimaryContainer else Color.White)
+                    .border(
+                        if (isBatchToggleFocused) 2.dp else 1.dp,
+                        if (isBatchToggleFocused) BeamPrimary else if (isBatchMode) Color(0xFF16A34A) else Color(0xFFE2E8F0),
+                        RoundedCornerShape(14.dp)
+                    )
+                    .onFocusChanged { isBatchToggleFocused = it.isFocused }
+                    .focusable()
                     .clickable { onToggleBatchMode() }
                     .padding(horizontal = 12.dp, vertical = 6.dp)
                     .testTag("batch_toggle_btn"),
@@ -406,18 +441,22 @@ fun ExplorerScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                var isNavBackFocused by remember { mutableStateOf(false) }
                 Box(
                     modifier = Modifier
                         .size(32.dp)
                         .clip(CircleShape)
-                        .background(BeamPrimaryContainer)
+                        .background(if (isNavBackFocused) BeamPrimary else BeamPrimaryContainer)
+                        .border(if (isNavBackFocused) 2.dp else 0.dp, BeamPrimary, CircleShape)
+                        .onFocusChanged { isNavBackFocused = it.isFocused }
+                        .focusable()
                         .clickable { onNavigateUp() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Navigate Up",
-                        tint = BeamPrimary,
+                        tint = if (isNavBackFocused) Color.White else BeamPrimary,
                         modifier = Modifier.size(16.dp)
                     )
                 }
