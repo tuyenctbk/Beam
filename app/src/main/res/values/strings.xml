@@ -225,6 +225,7 @@
     <string name="toast_clip_received_msg">Text from %1$s copied to TV clipboard</string>
 
     <!-- Checksum Integrity Verification -->
+    <string name="sha256_verified_title">SHA-256 Verified (Integrity OK)</string>
     <string name="checksum_integrity_title">Data Integrity &amp; Checksum</string>
     <string name="checksum_verified_sha256">SHA-256 Verified (Integrity OK)</string>
     <string name="checksum_verified_md5">MD5 Verified (Integrity OK)</string>

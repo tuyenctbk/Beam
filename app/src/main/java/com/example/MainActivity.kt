@@ -31,6 +31,7 @@ import com.example.ui.components.BottomNavBar
 import com.example.ui.components.ConnectivityWarningBanner
 import com.example.ui.components.NavTab
 import com.example.ui.components.NotificationBanner
+import com.example.ui.components.TvToastNotification
 import androidx.compose.ui.input.pointer.pointerInput
 import com.example.ui.components.OnboardingOverlay
 import com.example.ui.components.PowerSaverOverlay
@@ -124,6 +125,10 @@ fun MainAppScreen(viewModel: BeamViewModel) {
 
     val storageVolumes by viewModel.storageVolumes.collectAsStateWithLifecycle()
     val selectedStorageIndex by viewModel.selectedStorageIndex.collectAsStateWithLifecycle()
+    val isLowStorage by viewModel.isLowStorage.collectAsStateWithLifecycle()
+    val appCacheSizeBytes by viewModel.appCacheSizeBytes.collectAsStateWithLifecycle()
+    val largeFiles by viewModel.largeFiles.collectAsStateWithLifecycle()
+    val tvToast by viewModel.tvToast.collectAsStateWithLifecycle()
 
     val currentDirectory by viewModel.currentDirectory.collectAsStateWithLifecycle()
     val fileItems by viewModel.fileItems.collectAsStateWithLifecycle()
@@ -296,7 +301,16 @@ fun MainAppScreen(viewModel: BeamViewModel) {
                         StorageScreen(
                             storageVolumes = storageVolumes,
                             selectedIndex = selectedStorageIndex,
-                            onSelectStorageIndex = { viewModel.selectStorageVolume(it) }
+                            isLowStorage = isLowStorage,
+                            appCacheSize = appCacheSizeBytes,
+                            largeFiles = largeFiles,
+                            onSelectStorageIndex = { viewModel.selectStorageVolume(it) },
+                            onClearCache = { viewModel.clearAppCache() },
+                            onDeleteLargeFile = { viewModel.deleteFile(it) },
+                            onOpenFile = { item ->
+                                viewModel.recordFileAccess(item.file)
+                                FileOpener.openFile(context, item.file)
+                            }
                         )
                     }
 

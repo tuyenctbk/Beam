@@ -125,6 +125,9 @@ class BeamViewModel(application: Application) : AndroidViewModel(application) {
     private val _tvToast = MutableStateFlow<TvToast?>(null)
     val tvToast: StateFlow<TvToast?> = _tvToast.asStateFlow()
 
+    private val _recentNotification = MutableStateFlow<String?>(null)
+    val recentNotification: StateFlow<String?> = _recentNotification.asStateFlow()
+
     fun showTvToast(title: String, message: String, type: TvToastType, durationMs: Long = 4500L) {
         _tvToast.value = TvToast(
             id = System.currentTimeMillis(),

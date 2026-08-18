@@ -1,5 +1,5 @@
 {
-  "name": "Beam — Simple File Transfer",
+  "name": "Beam",
   "description": "The easiest, ad-free way to transfer files and manage storage on your Android TV.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

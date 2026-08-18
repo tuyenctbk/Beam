@@ -48,6 +48,12 @@ data class FileItem(
             return String.format("%.2f GB", gb)
         }
 
+    val formattedDate: String
+        get() {
+            val sdf = java.text.SimpleDateFormat("MMM dd, yyyy • HH:mm", java.util.Locale.getDefault())
+            return sdf.format(java.util.Date(lastModified))
+        }
+
     companion object {
         fun determineCategory(file: File): FileCategory {
             if (file.isDirectory) return FileCategory.ALL
