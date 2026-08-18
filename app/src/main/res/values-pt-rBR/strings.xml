@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Beam</string>
+    <string name="app_tagline">Transferência de arquivos sem fio e armazenamento para TV</string>
+
+    <string name="nav_dashboard">Início</string>
+    <string name="nav_explorer">Explorador</string>
+    <string name="nav_transfer">Transferência Web</string>
+    <string name="nav_storage">Armazenamento</string>
+    <string name="nav_settings">Configurações</string>
+
+    <string name="storage_indicator_title">Resumo do Armazenamento da TV</string>
+    <string name="storage_used_vs_total">%1$s usados de %2$s (%3$d%% livre)</string>
+    <string name="storage_used_label">Espaço Usado</string>
+    <string name="storage_available_label">Espaço Disponível</string>
+    <string name="storage_system_label">Sistema e Apps</string>
+    <string name="storage_files_label">Arquivos do Usuário</string>
+    <string name="storage_free_label">Espaço Livre</string>
+    <string name="storage_locations_title">Locais de Armazenamento</string>
+    <string name="storage_locations_desc">Selecione a unidade padrão para arquivos recebidos.</string>
+    <string name="low_storage_warning_title">Aviso de Pouco Espaço</string>
+    <string name="low_storage_warning_desc">Armazenamento crítico (%1$s livre, &lt; 10%%). Limpe o cache ou exclua arquivos grandes.</string>
+    <string name="low_storage_badge">CRÍTICO &lt; 10% LIVRE</string>
+    <string name="clear_cache_btn">Limpar Cache (%1$s)</string>
+    <string name="large_files_title">Maiores Arquivos na TV</string>
+    <string name="quick_clean_cache_title">Cache de Aplicativos</string>
+    <string name="quick_clean_cache_desc">Libere memória interna sem apagar seus arquivos</string>
+    <string name="storage_free_of_total">%1$s livre de %2$s</string>
+
+    <string name="dashboard_title">Categorias de Arquivos</string>
+    <string name="dashboard_subtitle">Navegue e gerencie arquivos na sua Android TV</string>
+    <string name="cat_photos">Fotos e Imagens</string>
+    <string name="cat_videos">Vídeos e Filmes</string>
+    <string name="cat_music">Áudio e Músicas</string>
+    <string name="cat_documents">Documentos</string>
+    <string name="cat_apks">Instaladores APK</string>
+    <string name="cat_zip">Arquivos ZIP</string>
+    <string name="cat_downloads">Downloads</string>
+    <string name="cat_all">Todo Armazenamento</string>
+    <string name="items_count">%1$d itens</string>
+    <string name="category_size_label">%1$s no total</string>
+
+    <string name="explorer_title">Gerenciador de Arquivos</string>
+    <string name="explorer_search_hint">Pesquisar por nome...</string>
+    <string name="sort_name">Nome</string>
+    <string name="sort_size">Tamanho</string>
+    <string name="sort_date">Data</string>
+    <string name="empty_folder_title">Nenhum Arquivo</string>
+    <string name="empty_folder_desc">Pasta vazia ou nenhum resultado encontrado.</string>
+    <string name="select_all">Selecionar Tudo</string>
+    <string name="deselect_all">Desmarcar Tudo</string>
+    <string name="batch_delete">Excluir Selecionados (%1$d)</string>
+    <string name="batch_move">Mover Selecionados (%1$d)</string>
+    <string name="parent_dir">.. Pasta Superior</string>
+
+    <string name="quick_preview">Detalhes e Pré-visualização</string>
+    <string name="open_execute">Abrir / Executar</string>
+    <string name="delete_file">Excluir Arquivo</string>
+    <string name="rename_file">Renomear</string>
+    <string name="move_file">Mover</string>
+    <string name="cancel">Cancelar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="version_label">Versão: %1$s</string>
+    <string name="sha256_verified_title">SHA-256 Verificado (OK)</string>
+    <string name="sha256_hash_label">Hash SHA-256</string>
+    <string name="copy_hash">Copiar Hash</string>
+
+    <string name="transfer_title">Transferência Sem Fio</string>
+    <string name="transfer_subtitle">Escaneie o QR code ou abra o IP no navegador do celular/PC</string>
+    <string name="server_address_label">Endereço do Servidor na TV:</string>
+    <string name="active_transfers_title">Atividade Recente</string>
+    <string name="no_transfers_yet">Nenhuma transferência recente. Abra a URL para enviar.</string>
+    <string name="clear_history">Limpar Histórico</string>
+
+    <string name="tv_remote_dpad">D-Pad: Navegar</string>
+    <string name="tv_remote_select">OK: Selecionar</string>
+    <string name="tv_remote_back">Voltar: Retornar</string>
+    <string name="tv_remote_menu">Menu: Opções</string>
+
+    <string name="toast_transfer_complete_title">Transferência Concluída</string>
+    <string name="toast_transfer_complete_msg">%1$s (%2$s)</string>
+    <string name="toast_transfer_failed_title">Falha na Transferência</string>
+    <string name="toast_file_deleted_title">Arquivo Excluído</string>
+    <string name="toast_file_deleted_msg">%1$s removido permanentemente</string>
+    <string name="toast_files_deleted_msg">%1$d arquivos excluídos (%2$s liberados)</string>
+    <string name="toast_connection_lost_title">Conexão Perdida</string>
+    <string name="toast_connection_lost_msg">Wi-Fi desconectado. Servidor em pausa.</string>
+</resources>
