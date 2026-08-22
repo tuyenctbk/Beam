@@ -59,6 +59,8 @@ class MainActivity : ComponentActivity() {
         viewModel.refreshFileList()
     }
 
+    private var hasStoragePermissionState by mutableStateOf(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -66,7 +68,7 @@ class MainActivity : ComponentActivity() {
         com.example.util.FirebaseManager.initialize(applicationContext)
         val startupTrace = com.example.util.FirebaseManager.startPerformanceTrace("app_startup_time")
 
-        requestStoragePermissions()
+        hasStoragePermissionState = checkHasStoragePermission()
 
         setContent {
             val isHighContrastDark by viewModel.isHighContrastDark.collectAsStateWithLifecycle()
@@ -76,8 +78,23 @@ class MainActivity : ComponentActivity() {
             }
 
             BeamTheme(isHighContrastDark = isHighContrastDark) {
-                MainAppScreen(viewModel)
+                MainAppScreen(
+                    viewModel = viewModel,
+                    hasStoragePermission = hasStoragePermissionState,
+                    onRequestStoragePermission = { requestStoragePermissions() }
+                )
             }
+        }
+    }
+
+    private fun checkHasStoragePermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Environment.isExternalStorageManager()
+        } else {
+            androidx.core.content.ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == android.content.pm.PackageManager.PERMISSION_GRANTED
         }
     }
 
@@ -101,8 +118,16 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun dispatchKeyEvent(event: android.view.KeyEvent): Boolean {
+        if (event.action == android.view.KeyEvent.ACTION_DOWN) {
+            viewModel.registerUserActivity()
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
     override fun onResume() {
         super.onResume()
+        hasStoragePermissionState = checkHasStoragePermission()
         viewModel.refreshNetworkInfo()
         viewModel.refreshStorageVolumes()
         viewModel.refreshFileList()
@@ -110,7 +135,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainAppScreen(viewModel: BeamViewModel) {
+fun MainAppScreen(
+    viewModel: BeamViewModel,
+    hasStoragePermission: Boolean = false,
+    onRequestStoragePermission: () -> Unit = {}
+) {
     val context = LocalContext.current
 
     val ipAddress by viewModel.ipAddress.collectAsStateWithLifecycle()
@@ -151,6 +180,26 @@ fun MainAppScreen(viewModel: BeamViewModel) {
 
     var activeTab by remember { mutableStateOf(NavTab.BEAM) }
     var showAboutModal by remember { mutableStateOf(false) }
+
+    // Android TV Remote D-Pad & Back key hierarchical navigation handler
+    androidx.activity.compose.BackHandler(
+        enabled = isPowerSaverActive || showAboutModal || showShareAppDialog || showRateAppDialog ||
+                showOnboardingOverlay || activeTab != NavTab.BEAM ||
+                (activeTab == NavTab.FILES && (searchQuery.isNotEmpty() || selectedCategory != FileCategory.ALL || currentDirectory.parentFile != null))
+    ) {
+        when {
+            isPowerSaverActive -> viewModel.registerUserActivity()
+            showAboutModal -> showAboutModal = false
+            showShareAppDialog -> viewModel.dismissShareDialog()
+            showRateAppDialog -> viewModel.dismissRateDialog()
+            showOnboardingOverlay -> viewModel.dismissOnboarding()
+            activeTab == NavTab.FILES && searchQuery.isNotEmpty() -> viewModel.setSearchQuery("")
+            activeTab == NavTab.FILES && selectedCategory != FileCategory.ALL -> viewModel.setCategory(FileCategory.ALL)
+            activeTab == NavTab.FILES && currentDirectory.parentFile != null &&
+                    currentDirectory.absolutePath != Environment.getExternalStorageDirectory().absolutePath -> viewModel.navigateUp()
+            activeTab != NavTab.BEAM -> activeTab = NavTab.BEAM
+        }
+    }
 
     androidx.compose.runtime.LaunchedEffect(activeTab) {
         com.example.util.FirebaseManager.logScreenView("Tab_${activeTab.name}")
@@ -355,10 +404,17 @@ fun MainAppScreen(viewModel: BeamViewModel) {
         AboutModal(onDismiss = { showAboutModal = false })
     }
 
-    // Onboarding Quick Start Overlay
+    // Onboarding Quick Start Overlay with Permission explanation
     OnboardingOverlay(
         isVisible = showOnboardingOverlay,
-        onDismiss = { viewModel.dismissOnboarding() }
+        hasStoragePermission = hasStoragePermission,
+        onRequestPermission = onRequestStoragePermission,
+        onDismiss = {
+            viewModel.dismissOnboarding()
+            if (!hasStoragePermission) {
+                onRequestStoragePermission()
+            }
+        }
     )
 
     // Smart Share App Dialog

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,12 +7,19 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
+}
+
 android {
     namespace = "com.example"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.aistudio.beam.tvfilemanager"
+        applicationId = "com.soloprono.beam"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -22,9 +31,34 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            val storeFilePath = localProperties.getProperty("RELEASE_STORE_FILE")
+                ?: System.getenv("RELEASE_STORE_FILE")
+                ?: "common_release_key.jks"
+            val storePass = localProperties.getProperty("RELEASE_STORE_PASSWORD")
+                ?: System.getenv("RELEASE_STORE_PASSWORD")
+            val kAlias = localProperties.getProperty("RELEASE_KEY_ALIAS")
+                ?: System.getenv("RELEASE_KEY_ALIAS")
+            val kPass = localProperties.getProperty("RELEASE_KEY_PASSWORD")
+                ?: System.getenv("RELEASE_KEY_PASSWORD")
+
+            if (!storePass.isNullOrEmpty() && !kAlias.isNullOrEmpty() && !kPass.isNullOrEmpty()) {
+                val resolvedStoreFile = rootProject.file(storeFilePath)
+                if (resolvedStoreFile.exists()) {
+                    storeFile = resolvedStoreFile
+                    storePassword = storePass
+                    keyAlias = kAlias
+                    keyPassword = kPass
+                }
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

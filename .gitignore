@@ -1,18 +1,61 @@
-*.iml
-.gradle
-.kotlin
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Built application files
+*.apk
+*.ap_
+*.aab
+*.dex
+
+# Java class files
+*.class
+
+# Generated build directories & cache
+build/
+**/build/
+.gradle/
+.kotlin/
+out/
+captures/
+bin/
+gen/
+
+# C/C++ native builds
+.externalNativeBuild/
+.cxx/
+*.o
+*.so
+
+# Environment & Local secrets
 local.properties
 .env
-debug.keystore
+.env.*
+!.env.example
+
+# Keystore & Signing files
+*.jks
+*.keystore
+*.p12
+*.key
+*.pepk
+
+# Android Studio / IntelliJ IDEA
+*.iml
+.idea/
+!.idea/codeStyles/
+!.idea/copyright/
+!.idea/vcs.xml
+
+# Visual Studio Code
+.vscode/
+
+# OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# Profiling & Diagnostics
+*.hprof
+*.log

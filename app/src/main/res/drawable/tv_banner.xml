@@ -1,0 +1,260 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+
+    <!-- 1. Background Base: Ultra-Deep TV Slate/Dark -->
+    <path
+        android:fillColor="#090D16"
+        android:pathData="M0,0h320v180h-320z" />
+
+    <!-- 2. Ambient Lighting & Glow Gradients -->
+    <!-- Indigo Radial / Ambient Wave from Left -->
+    <path
+        android:fillColor="#1E1B4B"
+        android:fillAlpha="0.7"
+        android:pathData="M-40,-20 C60,-20 120,40 140,120 C150,160 110,200 40,200 L-40,200 Z" />
+
+    <!-- Cyan Ambient Accent from Top Right -->
+    <path
+        android:fillColor="#0E7490"
+        android:fillAlpha="0.3"
+        android:pathData="M340,-20 C260,-20 200,30 220,100 C235,150 280,180 340,180 Z" />
+
+    <!-- Violet Bottom Accent Wave -->
+    <path
+        android:fillColor="#4338CA"
+        android:fillAlpha="0.2"
+        android:pathData="M0,180 L320,180 L320,130 C260,110 200,160 120,140 C60,125 20,160 0,180 Z" />
+
+    <!-- Tech Grid Lines / Geometric Accents (Subtle) -->
+    <path
+        android:strokeColor="#334155"
+        android:strokeWidth="1"
+        android:strokeAlpha="0.3"
+        android:pathData="M0,45 L320,45 M0,90 L320,90 M0,135 L320,135 M80,0 L80,180 M160,0 L160,180 M240,0 L240,180" />
+
+    <!-- Diagonal Beam Speed Lines -->
+    <path
+        android:strokeColor="#38BDF8"
+        android:strokeWidth="1.5"
+        android:strokeAlpha="0.25"
+        android:strokeLineCap="round"
+        android:pathData="M110,15 L145,15 M180,25 L230,25 M20,165 L65,165 M265,155 L305,155" />
+
+    <!-- ======================================================== -->
+    <!-- LEFT SIDE: APP LOGO EMBLEM (X: 30 to 106, Y: 46 to 134)   -->
+    <!-- ======================================================== -->
+
+    <!-- Outer Glow Ring -->
+    <path
+        android:fillColor="#6366F1"
+        android:fillAlpha="0.2"
+        android:pathData="M68,90m-46,0a46,46 0,1,1 92,0a46,46 0,1,1 -92,0" />
+
+    <!-- Middle Glow Ring -->
+    <path
+        android:fillColor="#06B6D4"
+        android:fillAlpha="0.15"
+        android:pathData="M68,90m-40,0a40,40 0,1,1 80,0a40,40 0,1,1 -80,0" />
+
+    <!-- Icon Card Base (Rounded Squircle) -->
+    <path
+        android:fillColor="#1E1B4B"
+        android:pathData="M40,62 C40,54 46,48 54,48 L82,48 C90,48 96,54 96,62 L96,118 C96,126 90,132 82,132 L54,132 C46,132 40,126 40,118 Z" />
+
+    <!-- Card Gradient Overlay (Diagonal Indigo-Cyan) -->
+    <path
+        android:fillColor="#4F46E5"
+        android:fillAlpha="0.85"
+        android:pathData="M40,62 C40,54 46,48 54,48 L82,48 C90,48 96,54 96,62 L96,118 C96,126 90,132 82,132 L54,132 C46,132 40,126 40,118 Z" />
+
+    <!-- Card Rim Highlight -->
+    <path
+        android:strokeColor="#818CF8"
+        android:strokeWidth="1.5"
+        android:strokeAlpha="0.8"
+        android:pathData="M40,62 C40,54 46,48 54,48 L82,48 C90,48 96,54 96,62 L96,118 C96,126 90,132 82,132 L54,132 C46,132 40,126 40,118 Z" />
+
+    <!-- File Folder Graphic Inside Card -->
+    <!-- Folder Back Tab -->
+    <path
+        android:fillColor="#C7D2FE"
+        android:pathData="M52,65 L61,65 L64,68 L84,68 C85.6,68 87,69.4 87,71 L87,76 L49,76 L49,68 C49,66.4 50.4,65 52,65 Z" />
+
+    <!-- Folder Front Pocket -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M49,74 L87,74 C88.6,74 90,75.4 90,77 L90,105 C90,106.6 88.6,108 87,108 L49,108 C47.4,108 46,106.6 46,105 L46,77 C46,75.4 47.4,74 49,74 Z" />
+
+    <!-- Inner Folder Shadow Depth -->
+    <path
+        android:fillColor="#E0E7FF"
+        android:pathData="M46,74 L90,74 L90,80 L46,80 Z" />
+
+    <!-- High-Speed Beam Wireless Transfer Arrows (Neon Cyan & Emerald) -->
+    <!-- Upper Arrow (Right) -->
+    <path
+        android:fillColor="#06B6D4"
+        android:pathData="M57,87 L71,87 L71,84 L78,90 L71,96 L71,93 L57,93 Z" />
+
+    <!-- Lower Arrow (Left) -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M79,97 L65,97 L65,94 L58,100 L65,106 L65,103 L79,103 Z" />
+
+    <!-- Top WiFi / Signal Radiating Arcs -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M60,57 C64.5,53.5 71.5,53.5 76,57" />
+
+    <path
+        android:strokeColor="#38BDF8"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M55,51 C62.5,45.5 73.5,45.5 81,51" />
+
+
+    <!-- ======================================================== -->
+    <!-- RIGHT SIDE: TYPOGRAPHY & TV BADGES (X: 120 to 300)       -->
+    <!-- ======================================================== -->
+
+    <!-- "B" Path (X: 122..146, Y: 52..86, Height: 34dp, Width: 24dp) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M122,52 H137 C142.5,52 146,55.2 146,59.5 C146,63 143.5,66 140,67.2 C144.5,68.5 147,72 147,76.5 C147,81.8 142.8,86 137,86 H122 Z M129,58 V66 H136 C138.2,66 139.8,64.8 139.8,62 C139.8,59.2 138.2,58 136,58 Z M129,72 V80 H136.5 C139,80 140.5,78.5 140.5,76 C140.5,73.5 139,72 136.5,72 Z" />
+
+    <!-- "E" Path (X: 154..176, Y: 52..86, Height: 34dp, Width: 22dp) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M154,52 H176 V58.5 H161 V65.5 H174 V72 H161 V79.5 H176 V86 H154 Z" />
+
+    <!-- "A" Path (X: 184..210, Y: 52..86, Height: 34dp, Width: 26dp) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M197,52 L210,86 H202.5 L199.8,78.5 H194.2 L191.5,86 H184 Z M197,63 L195.2,73 H198.8 Z" />
+
+    <!-- "M" Path (X: 218..248, Y: 52..86, Height: 34dp, Width: 30dp) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M218,52 H226 L233,70 L240,52 H248 V86 H241.5 V63.5 L234.8,80 H231.2 L224.5,63.5 V86 H218 Z" />
+
+    <!-- TV Pill Badge (X: 256..296, Y: 54..74, Height: 20dp, Width: 40dp) -->
+    <path
+        android:fillColor="#4F46E5"
+        android:pathData="M261,54 H291 C294,54 296,56 296,59 L296,69 C296,72 294,74 291,74 H261 C258,74 256,72 256,69 L256,59 C256,56 258,54 261,54 Z" />
+
+    <path
+        android:strokeColor="#818CF8"
+        android:strokeWidth="1"
+        android:pathData="M261,54 H291 C294,54 296,56 296,59 L296,69 C296,72 294,74 291,74 H261 C258,74 256,72 256,69 L256,59 C256,56 258,54 261,54 Z" />
+
+    <!-- "TV" Letters inside Pill -->
+    <!-- T -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M265,59 H275 V62 H271.5 V70 H268.5 V62 H265 Z" />
+    <!-- V -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M278,59 H281.5 L284,67 L286.5,59 H290 L286,70 H282 Z" />
+
+
+    <!-- Subtitle Pill / Feature Bar (X: 122..296, Y: 98..124, Height: 26dp) -->
+    <path
+        android:fillColor="#111827"
+        android:pathData="M128,98 H290 C293.5,98 296,100.5 296,104 L296,118 C296,121.5 293.5,124 290,124 H128 C124.5,124 122,121.5 122,118 L122,104 C122,100.5 124.5,98 128,98 Z" />
+
+    <path
+        android:strokeColor="#38BDF8"
+        android:strokeWidth="1"
+        android:strokeAlpha="0.5"
+        android:pathData="M128,98 H290 C293.5,98 296,100.5 296,104 L296,118 C296,121.5 293.5,124 290,124 H128 C124.5,124 122,121.5 122,118 L122,104 C122,100.5 124.5,98 128,98 Z" />
+
+    <!-- Green Glowing Live Status Dot in Pill -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M132,111m-3,0a3,3 0,1,1 6,0a3,3 0,1,1 -6,0" />
+
+    <!-- Subtitle "WIRELESS FILE MANAGER" Micro Vector Typography -->
+    <!-- W -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M141,106 H143.5 L145,112.5 L146.5,106 H148.5 L150,112.5 L151.5,106 H154 L151.5,116 H149 L147.5,109.5 L146,116 H143.5 Z" />
+    <!-- I -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M157,106 H159.5 V116 H157 Z" />
+    <!-- R -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M162,106 H166.5 C168,106 169.5,107 169.5,109 C169.5,110.5 168.5,111.5 167,111.8 L170,116 H167.2 L164.8,112.2 H164.2 V116 H162 Z M164.2,108 V110.5 H166.2 C167,110.5 167.5,110 167.5,109.2 C167.5,108.5 167,108 166.2,108 Z" />
+    <!-- E -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M172,106 H178 V108 H174.5 V110 H177.5 V112 H174.5 V114 H178 V116 H172 Z" />
+    <!-- L -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M180,106 H182.5 V114 H186 V116 H180 Z" />
+    <!-- E -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M188,106 H194 V108 H190.5 V110 H193.5 V112 H190.5 V114 H194 V116 H188 Z" />
+    <!-- S -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M196,114.5 L198,113.8 C198.3,114.3 198.8,114.6 199.5,114.6 C200.2,114.6 200.7,114.2 200.7,113.6 C200.7,113 200.2,112.7 199,112.3 C197.2,111.7 196.2,111 196.2,109.5 C196.2,107.5 197.8,106 200,106 C201.8,106 202.8,107 203.2,108.2 L201.3,109 C201,108.4 200.6,108 199.8,108 C199.2,108 198.7,108.3 198.7,108.8 C198.7,109.3 199.2,109.6 200.4,110 C202.2,110.6 203.2,111.4 203.2,113 C203.2,115 201.7,116.2 199.5,116.2 C197.5,116.2 196.4,115.3 196,114.5 Z" />
+    <!-- S -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M205,114.5 L207,113.8 C207.3,114.3 207.8,114.6 208.5,114.6 C209.2,114.6 209.7,114.2 209.7,113.6 C209.7,113 209.2,112.7 208,112.3 C206.2,111.7 205.2,111 205.2,109.5 C205.2,107.5 206.8,106 209,106 C210.8,106 211.8,107 212.2,108.2 L210.3,109 C210,108.4 209.6,108 208.8,108 C208.2,108 207.7,108.3 207.7,108.8 C207.7,109.3 208.2,109.6 209.4,110 C211.2,110.6 212.2,111.4 212.2,113 C212.2,115 210.7,116.2 208.5,116.2 C206.5,116.2 205.4,115.3 205,114.5 Z" />
+
+    <!-- Separator Dot -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M216,111m-1.5,0a1.5,1.5 0,1,1 3,0a1.5,1.5 0,1,1 -3,0" />
+
+    <!-- F -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M222,106 H227 V108 H224.2 V110 H226.5 V112 H224.2 V116 H222 Z" />
+    <!-- I -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M229,106 H231.2 V116 H229 Z" />
+    <!-- L -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M233,106 H235.2 V114 H238 V116 H233 Z" />
+    <!-- E -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M240,106 H245 V108 H242.2 V110 H244.5 V112 H242.2 V114 H245 V116 H240 Z" />
+    <!-- S -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M247,114.5 L249,113.8 C249.3,114.3 249.8,114.6 250.5,114.6 C251.2,114.6 251.7,114.2 251.7,113.6 C251.7,113 251.2,112.7 250,112.3 C248.2,111.7 247.2,111 247.2,109.5 C247.2,107.5 248.8,106 251,106 C252.8,106 253.8,107 254.2,108.2 L252.3,109 C252,108.4 251.6,108 250.8,108 C250.2,108 249.7,108.3 249.7,108.8 C249.7,109.3 250.2,109.6 251.4,110 C253.2,110.6 254.2,111.4 254.2,113 C254.2,115 252.7,116.2 250.5,116.2 C248.5,116.2 247.4,115.3 247,114.5 Z" />
+
+    <!-- Separator Dot -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M258,111m-1.5,0a1.5,1.5 0,1,1 3,0a1.5,1.5 0,1,1 -3,0" />
+
+    <!-- H -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M263,106 H265.2 V110 H268 V106 H270.2 V116 H268 V112 H265.2 V116 H263 Z" />
+    <!-- U -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M273,106 H275.2 V113.5 C275.2,114.2 275.6,114.6 276.2,114.6 C276.8,114.6 277.2,114.2 277.2,113.5 V106 H279.4 V113.5 C279.4,115.2 278.2,116.2 276.2,116.2 C274.2,116.2 273,115.2 273,113.5 Z" />
+    <!-- B -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M282,106 H286.5 C288,106 289,107 289,108.5 C289,109.5 288.4,110.4 287.2,110.8 C288.6,111.2 289.2,112.2 289.2,113.5 C289.2,115.2 288,116 286.5,116 H282 Z M284.2,107.8 V110 H286.2 C286.8,110 287.2,109.6 287.2,108.9 C287.2,108.2 286.8,107.8 286.2,107.8 Z M284.2,111.8 V114.2 H286.5 C287.1,114.2 287.5,113.7 287.5,113 C287.5,112.3 287.1,111.8 286.5,111.8 Z" />
+
+</vector>

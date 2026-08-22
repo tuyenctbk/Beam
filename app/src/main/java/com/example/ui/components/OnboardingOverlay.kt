@@ -25,11 +25,9 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.CloudUpload
-import androidx.compose.material.icons.filled.ContentPaste
-import androidx.compose.material.icons.filled.QrCodeScanner
+import androidx.compose.material.icons.filled.FolderShared
 import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -56,48 +54,69 @@ data class OnboardingStep(
     val subtitle: String,
     val instruction: String,
     val icon: ImageVector,
-    val badge: String
+    val badge: String,
+    val isPermissionStep: Boolean = false
 )
 
 @Composable
 fun OnboardingOverlay(
     isVisible: Boolean,
+    hasStoragePermission: Boolean = false,
+    onRequestPermission: () -> Unit = {},
     onDismiss: () -> Unit
 ) {
     if (!isVisible) return
 
-    val step1Title = stringResource(R.string.welcome_title)
-    val step1Sub = stringResource(R.string.welcome_sub)
-    val step1Inst = stringResource(R.string.welcome_instruction)
+    val stepWelcomeTitle = stringResource(R.string.welcome_title)
+    val stepWelcomeSub = stringResource(R.string.welcome_sub)
+    val stepWelcomeInst = stringResource(R.string.welcome_instruction)
 
-    val step2Title = stringResource(R.string.step1_title)
-    val step2Sub = stringResource(R.string.step1_sub)
-    val step2Inst = stringResource(R.string.step1_instruction)
+    val stepPermTitle = stringResource(R.string.permission_step_title)
+    val stepPermSub = stringResource(R.string.permission_step_sub)
+    val stepPermInst = if (hasStoragePermission) {
+        stringResource(R.string.permission_granted_instruction)
+    } else {
+        stringResource(R.string.permission_step_instruction)
+    }
 
-    val step3Title = stringResource(R.string.step2_title)
-    val step3Sub = stringResource(R.string.step2_sub)
-    val step3Inst = stringResource(R.string.step2_instruction)
+    val step1Title = stringResource(R.string.step1_title)
+    val step1Sub = stringResource(R.string.step1_sub)
+    val step1Inst = stringResource(R.string.step1_instruction)
 
-    val steps = remember(step1Title, step2Title, step3Title) {
+    val step2Title = stringResource(R.string.step2_title)
+    val step2Sub = stringResource(R.string.step2_sub)
+    val step2Inst = stringResource(R.string.step2_instruction)
+
+    val steps = remember(
+        stepWelcomeTitle, stepPermTitle, stepPermInst, step1Title, step2Title, hasStoragePermission
+    ) {
         listOf(
+            OnboardingStep(
+                title = stepWelcomeTitle,
+                subtitle = stepWelcomeSub,
+                instruction = stepWelcomeInst,
+                icon = Icons.Default.Tv,
+                badge = "WELCOME"
+            ),
+            OnboardingStep(
+                title = stepPermTitle,
+                subtitle = stepPermSub,
+                instruction = stepPermInst,
+                icon = if (hasStoragePermission) Icons.Default.CheckCircle else Icons.Default.FolderShared,
+                badge = if (hasStoragePermission) "PERMISSION GRANTED" else "STORAGE ACCESS",
+                isPermissionStep = true
+            ),
             OnboardingStep(
                 title = step1Title,
                 subtitle = step1Sub,
                 instruction = step1Inst,
-                icon = Icons.Default.Tv,
-                badge = "WELCOME"
+                icon = Icons.Default.CameraAlt,
+                badge = "STEP 1 OF 2"
             ),
             OnboardingStep(
                 title = step2Title,
                 subtitle = step2Sub,
                 instruction = step2Inst,
-                icon = Icons.Default.CameraAlt,
-                badge = "STEP 1 OF 2"
-            ),
-            OnboardingStep(
-                title = step3Title,
-                subtitle = step3Sub,
-                instruction = step3Inst,
                 icon = Icons.Default.CloudUpload,
                 badge = "STEP 2 OF 2"
             )
@@ -156,14 +175,26 @@ fun OnboardingOverlay(
                         modifier = Modifier
                             .size(80.dp)
                             .clip(CircleShape)
-                            .background(BeamPrimary.copy(alpha = 0.15f))
-                            .border(2.dp, BeamPrimary, CircleShape),
+                            .background(
+                                if (currentStep.isPermissionStep && hasStoragePermission)
+                                    Color(0xFF10B981).copy(alpha = 0.2f)
+                                else BeamPrimary.copy(alpha = 0.15f)
+                            )
+                            .border(
+                                2.dp,
+                                if (currentStep.isPermissionStep && hasStoragePermission)
+                                    Color(0xFF10B981)
+                                else BeamPrimary,
+                                CircleShape
+                            ),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = currentStep.icon,
                             contentDescription = currentStep.title,
-                            tint = Color(0xFF38BDF8),
+                            tint = if (currentStep.isPermissionStep && hasStoragePermission)
+                                Color(0xFF34D399)
+                            else Color(0xFF38BDF8),
                             modifier = Modifier.size(40.dp)
                         )
                     }
@@ -176,7 +207,11 @@ fun OnboardingOverlay(
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(12.dp))
-                                .background(BeamPrimary)
+                                .background(
+                                    if (currentStep.isPermissionStep && hasStoragePermission)
+                                        Color(0xFF059669)
+                                    else BeamPrimary
+                                )
                                 .padding(horizontal = 12.dp, vertical = 4.dp)
                         ) {
                             Text(
@@ -231,7 +266,7 @@ fun OnboardingOverlay(
                     ) {
                         var isSkipFocused by remember { mutableStateOf(false) }
 
-                        // Skip / Back Button
+                        // Skip / Dismiss Button
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(16.dp))
@@ -259,12 +294,17 @@ fun OnboardingOverlay(
 
                         var isNextFocused by remember { mutableStateOf(false) }
 
-                        // Next / Start Button
+                        // Action / Next Button
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(
-                                    if (isNextFocused) Color(0xFF2563EB) else BeamPrimary
+                                    when {
+                                        currentStep.isPermissionStep && !hasStoragePermission ->
+                                            if (isNextFocused) Color(0xFFD97706) else Color(0xFFF59E0B)
+                                        isNextFocused -> Color(0xFF2563EB)
+                                        else -> BeamPrimary
+                                    }
                                 )
                                 .border(
                                     3.dp,
@@ -272,7 +312,9 @@ fun OnboardingOverlay(
                                     RoundedCornerShape(16.dp)
                                 )
                                 .clickable {
-                                    if (currentStepIndex < steps.size - 1) {
+                                    if (currentStep.isPermissionStep && !hasStoragePermission) {
+                                        onRequestPermission()
+                                    } else if (currentStepIndex < steps.size - 1) {
                                         currentStepIndex++
                                     } else {
                                         onDismiss()
@@ -284,15 +326,26 @@ fun OnboardingOverlay(
                                 .testTag("onboarding_next_button")
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
+                                val buttonText = when {
+                                    currentStep.isPermissionStep && !hasStoragePermission ->
+                                        stringResource(R.string.permission_grant_btn)
+                                    currentStepIndex < steps.size - 1 ->
+                                        stringResource(R.string.next_step)
+                                    else ->
+                                        stringResource(R.string.start_beaming)
+                                }
+
                                 Text(
-                                    text = if (currentStepIndex < steps.size - 1) stringResource(R.string.next_step) else stringResource(R.string.start_beaming),
+                                    text = buttonText,
                                     fontSize = 15.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Icon(
-                                    imageVector = if (currentStepIndex < steps.size - 1) Icons.Default.ArrowForward else Icons.Default.CheckCircle,
+                                    imageVector = if (currentStepIndex < steps.size - 1 && !(currentStep.isPermissionStep && !hasStoragePermission))
+                                        Icons.Default.ArrowForward
+                                    else Icons.Default.CheckCircle,
                                     contentDescription = null,
                                     tint = Color.White,
                                     modifier = Modifier.size(18.dp)
