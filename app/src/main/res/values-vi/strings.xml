@@ -85,4 +85,66 @@
     <string name="toast_files_deleted_msg">Đã xóa %1$d tệp (giải phóng %2$s)</string>
     <string name="toast_connection_lost_title">Mất kết nối Wi-Fi</string>
     <string name="toast_connection_lost_msg">Wi-Fi ngắt kết nối. Máy chủ truyền tệp tạm dừng.</string>
+
+    <!-- Bộ lọc tệp -->
+    <string name="filter_by_label">Lọc theo:</string>
+    <string name="filter_all_files">Tất cả tệp</string>
+    <string name="filter_images">Hình ảnh</string>
+    <string name="filter_videos">Video</string>
+    <string name="filter_documents">Tài liệu</string>
+    <string name="filter_audio">Âm thanh</string>
+    <string name="cat_all_files">Tất cả tệp</string>
+
+    <!-- Trạng thái trống & Hướng dẫn -->
+    <string name="empty_state_file_browser_title">Chưa có tệp nào</string>
+    <string name="empty_state_file_browser_desc">Bộ nhớ TV của bạn đang trống! Kết nối điện thoại hoặc máy tính cùng mạng Wi-Fi để truyền hình ảnh, video hoặc tài liệu lên TV.</string>
+    <string name="empty_state_search_title">Không tìm thấy tệp khớp với \"%1$s\"</string>
+    <string name="empty_state_search_desc">Kiểm tra lại chính tả hoặc thử tìm kiếm bằng từ khóa khác.</string>
+    <string name="empty_state_history_title">Chưa có lịch sử truyền tệp</string>
+    <string name="empty_state_history_desc">Các tệp được truyền qua Web Beam sẽ tự động xuất hiện tại đây.</string>
+    <string name="btn_go_to_web_beam">Bắt đầu máy chủ Web Beam</string>
+    <string name="btn_show_all_files">Hiển thị tất cả tệp</string>
+    <string name="onboarding_tip_title">Hướng dẫn truyền tệp nhanh:</string>
+    <string name="onboarding_step_1">1. Kết nối điện thoại/máy tính cùng mạng Wi-Fi</string>
+    <string name="onboarding_step_2">2. Quét mã QR hoặc mở liên kết trên trình duyệt</string>
+    <string name="onboarding_step_3">3. Tải tệp lên để chuyển thẳng sang TV</string>
+
+    <!-- Tiêu đề cột & Chỉ báo sắp xếp -->
+    <string name="header_column_name">Tên</string>
+    <string name="header_column_date">Ngày sửa đổi</string>
+    <string name="header_column_size">Kích thước</string>
+    <string name="header_column_category">Loại</string>
+
+    <!-- Thông báo & Khung báo Toast -->
+    <string name="notification_receiving">Đang nhận: %1$s</string>
+    <string name="notification_sending">Đang gửi: %1$s</string>
+    <string name="notification_progress_detail">%1$d%% (%2$s / %3$s) • %4$s • %5$s</string>
+    <string name="notification_server_active">Máy chủ Beam đang hoạt động</string>
+    <string name="notification_server_ready">Sẵn sàng nhận tệp truyền vào</string>
+    <string name="toast_beamed">Đã nhận tệp: %1$s (%2$s)</string>
+    <string name="remote_clipboard_title">Văn bản từ xa</string>
+    <string name="toast_remote_clipboard_received">Đã nhận văn bản từ xa!</string>
+    <string name="toast_history_item_removed">Đã xóa khỏi lịch sử truyền tệp</string>
+
+    <!-- Chia sẻ QR, Chi tiết phương tiện & Dọn dẹp bộ nhớ -->
+    <string name="share_qr_title">Chia sẻ qua Mã QR</string>
+    <string name="share_qr_subtitle">Quét bằng điện thoại hoặc máy tính bảng để kết nối hoặc tải xuống trực tiếp</string>
+    <string name="share_qr_btn">Chia sẻ QR</string>
+    <string name="media_detail_resolution">Độ phân giải</string>
+    <string name="media_detail_bitrate">Tốc độ bit (Bitrate)</string>
+    <string name="media_detail_duration">Thời lượng</string>
+    <string name="cleanup_scanner_title">Dọn dẹp &amp; Quét bộ nhớ</string>
+    <string name="cleanup_scanner_subtitle">Quét tệp tạm thời, nhật ký dư thừa và bộ nhớ đệm cũ</string>
+    <string name="btn_scan_storage">Quét bộ nhớ</string>
+    <string name="scanning_junk_files">Đang quét tệp rác và tệp tạm thời...</string>
+    <string name="cleanup_app_cache">Bộ nhớ đệm ứng dụng &amp; Hình thu nhỏ</string>
+    <string name="cleanup_temp_logs">Tệp tạm thời &amp; Nhật ký</string>
+    <string name="cleanup_stale_downloads">Tệp tải xuống dở dang / Cũ</string>
+    <string name="total_junk_found">Tổng dung lượng có thể giải phóng</string>
+    <string name="one_click_cleanup_action">Dọn dẹp 1 Chạm</string>
+    <string name="delete_large_file_title">Xóa tệp dung lượng lớn?</string>
+    <string name="toast_cleanup_success">Dọn dẹp hoàn tất! Đã giải phóng %1$s</string>
+    <string name="showing_top_large_files">Hiển thị các tệp lớn nhất</string>
+    <string name="no_large_files_found">Không tìm thấy tệp lớn nào trong bộ nhớ</string>
+    <string name="dialog_done">Hoàn tất</string>
 </resources>

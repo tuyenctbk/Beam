@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+
+    <!-- 1. Background Deep Tech Gradient -->
+    <path
+        android:pathData="M0,0h320v180h-320z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="0"
+                android:startY="0"
+                android:endX="320"
+                android:endY="180"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#0B0F19" />
+                <item android:offset="0.5" android:color="#080C16" />
+                <item android:offset="1.0" android:color="#020408" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- 2. Subtle Cyber Grid Line Overlay -->
+    <path
+        android:pathData="M40,0 L40,180 M80,0 L80,180 M120,0 L120,180 M160,0 L160,180 M200,0 L200,180 M240,0 L240,180 M280,0 L280,180 M0,30 L320,30 M0,60 L320,60 M0,90 L320,90 M0,120 L320,120 M0,150 L320,150"
+        android:strokeWidth="0.5"
+        android:strokeColor="#0A00F2FE" />
+
+    <!-- 3. Left Radial Cyber Glow -->
+    <path
+        android:pathData="M82,90m-65,0a65,65 0,1 1,130 0a65,65 0,1 1,-130 0">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:centerX="82"
+                android:centerY="90"
+                android:gradientRadius="65"
+                android:type="radial">
+                <item android:offset="0.0" android:color="#5000F2FE" />
+                <item android:offset="0.6" android:color="#184FACFE" />
+                <item android:offset="1.0" android:color="#00000000" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- 4. Left Hero TV Glass Emblem (Center: X=82, Y=90) -->
+    <!-- Outer Floating Glass Badge -->
+    <path
+        android:pathData="M52,56 L112,56 A12,12 0 0,1 124,68 L124,112 A12,12 0 0,1 112,124 L52,124 A12,12 0 0,1 40,112 L40,68 A12,12 0 0,1 52,56 Z"
+        android:fillColor="#131929"
+        android:strokeWidth="2"
+        android:strokeColor="#00F2FE" />
+
+    <!-- Radiant Wireless Arcs above Screen -->
+    <path
+        android:pathData="M66,66 C71,62 76.5,60 82,60 C87.5,60 93,62 98,66"
+        android:strokeWidth="3.5"
+        android:strokeColor="#00F2FE"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+
+    <path
+        android:pathData="M71,71 C74.5,68.5 78,67 82,67 C86,67 89.5,68.5 93,71"
+        android:strokeWidth="2.8"
+        android:strokeColor="#4FACFE"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+
+    <!-- Screen Matrix -->
+    <path
+        android:pathData="M54,72 L110,72 A4,4 0 0,1 114,76 L114,104 A4,4 0 0,1 110,108 L54,108 A4,4 0 0,1 50,104 L50,76 A4,4 0 0,1 54,72 Z"
+        android:fillColor="#090E1A" />
+
+    <!-- Upward Transfer Energy Arrow -->
+    <path
+        android:pathData="M82,75 L91,85 L86,85 L86,98 L78,98 L78,85 L73,85 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="82"
+                android:startY="75"
+                android:endX="82"
+                android:endY="98"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#FFFFFF" />
+                <item android:offset="0.4" android:color="#00F2FE" />
+                <item android:offset="1.0" android:color="#4FACFE" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- TV Stand -->
+    <path
+        android:pathData="M70,113 L94,113 A2,2 0 0,1 96,115 L96,115 A2,2 0 0,1 94,117 L70,117 A2,2 0 0,1 68,115 L68,115 A2,2 0 0,1 70,113 Z"
+        android:fillColor="#4FACFE" />
+
+    <!-- 5. Right Side: Bold Modern Futuristic "BEAM" Logotype -->
+    <!-- B -->
+    <path
+        android:pathData="M142,62 L163,62 C168.5,62 172,65.5 172,70 C172,73.5 169,76 164.5,77 C170,78 173.5,81.5 173.5,86.5 C173.5,91.5 169,96 163,96 L142,96 Z M149.5,69 L149.5,75.5 L161.5,75.5 C164,75.5 165.5,74 165.5,72.2 C165.5,70.5 164,69 161.5,69 Z M149.5,81.5 L149.5,89 L162,89 C164.8,89 166.5,87.5 166.5,85.2 C166.5,83 164.8,81.5 162,81.5 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- E -->
+    <path
+        android:pathData="M179,62 L202,62 L202,69 L186.5,69 L186.5,75.5 L200,75.5 L200,82.5 L186.5,82.5 L186.5,89 L203,89 L203,96 L179,96 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- A (with Cyan Accent) -->
+    <path
+        android:pathData="M210,96 L220.5,62 L228.5,62 L239,96 L231.5,96 L229.5,89 L219.5,89 L217.5,96 Z M221.5,82.5 L227.5,82.5 L224.5,71.5 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="210"
+                android:startY="62"
+                android:endX="239"
+                android:endY="96"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#00F2FE" />
+                <item android:offset="1.0" android:color="#4FACFE" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- M -->
+    <path
+        android:pathData="M245,62 L253.5,62 L260,82 L266.5,62 L275,62 L275,96 L268,96 L268,73 L262.5,91 L257.5,91 L252,73 L252,96 L245,96 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Subtitle Bar & Cyber Divider -->
+    <path
+        android:pathData="M142,104 L295,104 L295,106 L142,106 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="142"
+                android:startY="104"
+                android:endX="295"
+                android:endY="106"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#00F2FE" />
+                <item android:offset="0.7" android:color="#4FACFE" />
+                <item android:offset="1.0" android:color="#00000000" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Badge Pills on the bottom right -->
+    <!-- Pill 1: Wi-Fi Transfer -->
+    <path
+        android:pathData="M142,114 L205,114 A6,6 0 0,1 211,120 L211,126 A6,6 0 0,1 205,132 L142,132 A6,6 0 0,1 136,126 L136,120 A6,6 0 0,1 142,114 Z"
+        android:fillColor="#152033"
+        android:strokeWidth="1"
+        android:strokeColor="#00F2FE" />
+
+    <!-- Pill 2: 4K Storage -->
+    <path
+        android:pathData="M220,114 L275,114 A6,6 0 0,1 281,120 L281,126 A6,6 0 0,1 275,132 L220,132 A6,6 0 0,1 214,120 L214,120 A6,6 0 0,1 220,114 Z"
+        android:fillColor="#152033"
+        android:strokeWidth="1"
+        android:strokeColor="#4FACFE" />
+
+</vector>
