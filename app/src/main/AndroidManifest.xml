@@ -8,9 +8,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- Exclusively Android TV: Require Leanback and disable touch requirement -->
     <uses-feature android:name="android.software.leanback" android:required="true" />
@@ -59,11 +56,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-        <service
-            android:name=".beam.service.BeamTransferService"
-            android:foregroundServiceType="dataSync"
-            android:exported="false" />
     </application>
 
 </manifest>

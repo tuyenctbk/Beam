@@ -27,7 +27,6 @@ import com.example.beam.data.repository.BeamRepository
 import com.example.beam.server.BeamWebServer
 import com.example.beam.server.NetworkUtils
 import com.example.beam.server.QrCodeUtils
-import com.example.beam.service.BeamTransferService
 import com.example.beam.ui.theme.ThemeMode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -395,7 +394,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 )
                 webServer?.start()
                 _isServerRunning.value = true
-                BeamTransferService.start(getApplication(), "Beam Server Active", "Server running at $url")
             } catch (e: Exception) {
                 e.printStackTrace()
                 _isServerRunning.value = false
@@ -407,7 +405,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         webServer?.stop()
         webServer = null
         _isServerRunning.value = false
-        BeamTransferService.stop(getApplication())
     }
 
     private fun updateTransferProgress(
@@ -442,20 +439,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 currentList.add(updatedTransfer)
             }
             _activeTransfers.value = currentList
-
-            // Update persistent notification with active transfer progress & MB/s speed
-            val pct = (progress * 100).toInt()
-            val app = getApplication<Application>()
-            val speedStr = updatedTransfer.formattedSpeed
-            val actionTitle = if (isUpload) app.getString(R.string.notification_receiving, fileName) else app.getString(R.string.notification_sending, fileName)
-            val detailText = app.getString(R.string.notification_progress_detail, pct, updatedTransfer.formattedTransferred, updatedTransfer.formattedTotal, speedStr, clientIp)
-
-            BeamTransferService.update(
-                app,
-                actionTitle,
-                detailText,
-                pct
-            )
         }
     }
 
@@ -463,15 +446,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.Main) {
             delay(800) // Brief moment so user sees 100% completed
             _activeTransfers.value = _activeTransfers.value.filter { it.id != id }
-            if (_activeTransfers.value.isEmpty() && _isServerRunning.value) {
-                val app = getApplication<Application>()
-                BeamTransferService.update(
-                    app,
-                    app.getString(R.string.notification_server_active),
-                    app.getString(R.string.notification_server_ready),
-                    -1
-                )
-            }
         }
     }
 
