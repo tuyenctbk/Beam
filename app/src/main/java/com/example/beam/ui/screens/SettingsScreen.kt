@@ -93,7 +93,7 @@ fun SettingsScreen(
         // App Info Banner Card
         item {
             TvFocusableCard(
-                onClick = { viewModel.showToast("Beam TV - Version 1.0.0 (Build 2026)") },
+                onClick = { viewModel.showToast("Beam TV - Version 1.0.1 (Build 2026)") },
                 modifier = Modifier.fillMaxWidth(),
                 testTag = "settings_app_info_card"
             ) { isFocused ->
@@ -138,7 +138,7 @@ fun SettingsScreen(
                             .padding(horizontal = 10.dp, vertical = 6.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.version_label, "1.0.0"),
+                            text = stringResource(R.string.version_label, "1.0.1"),
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
                             color = BeamFocusCyanBright
