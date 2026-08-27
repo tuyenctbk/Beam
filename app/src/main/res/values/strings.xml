@@ -78,12 +78,29 @@
     <string name="items_count">%1$d items</string>
     <string name="category_size_label">%1$s total</string>
 
+    <!-- Active Transfers & Progress -->
+    <string name="active_transfers_header">Live Transfers in Progress</string>
+    <string name="transfer_status_uploading">RECEIVING (BEAMING TO TV)</string>
+    <string name="transfer_status_downloading">SENDING (DOWNLOADING FROM TV)</string>
+
     <!-- File Explorer & Batch Operations -->
     <string name="explorer_title">File Explorer</string>
     <string name="explorer_search_hint">Search files by name...</string>
+    <string name="search_results_count">%1$d matching items found</string>
+    <string name="clear_search">Clear Search</string>
+    <string name="sort_by_label">Sort By:</string>
     <string name="sort_name">Name</string>
+    <string name="sort_name_asc">Name (A → Z)</string>
+    <string name="sort_name_desc">Name (Z → A)</string>
     <string name="sort_size">Size</string>
+    <string name="sort_size_desc">Size (Largest first)</string>
+    <string name="sort_size_asc">Size (Smallest first)</string>
     <string name="sort_date">Date</string>
+    <string name="sort_date_desc">Date (Newest first)</string>
+    <string name="sort_date_asc">Date (Oldest first)</string>
+    <string name="confirm_delete_title">Confirm Deletion</string>
+    <string name="delete_confirm_title">Confirm Deletion</string>
+    <string name="delete_batch_confirm_title">Delete %1$d Selected Items?</string>
     <string name="empty_folder_title">No Files Found</string>
     <string name="empty_folder_desc">This folder is empty or no matching items found.</string>
     <string name="no_files_found">No files found</string>
@@ -92,8 +109,12 @@
     <string name="deselect_all">Deselect All</string>
     <string name="batch_select">Batch Select</string>
     <string name="clear_selection">Clear Selection</string>
-    <string name="batch_delete">Delete Selected (%1$d)</string>
-    <string name="batch_move">Move Selected (%1$d)</string>
+    <string name="batch_delete">Delete (%1$d)</string>
+    <string name="batch_copy">Copy (%1$d)</string>
+    <string name="batch_move">Move (%1$d)</string>
+    <string name="paste_here_btn">Paste %1$d Items Here</string>
+    <string name="staged_moving_banner">Moving %1$d item(s) • Navigate to target folder and click Paste</string>
+    <string name="staged_copying_banner">Copying %1$d item(s) • Navigate to target folder and click Paste</string>
     <string name="parent_dir">.. Parent Folder</string>
     <string name="rename">Rename</string>
     <string name="rename_desc">Change file name</string>
@@ -117,6 +138,13 @@
     <string name="delete_file">Delete File</string>
     <string name="rename_file">Rename</string>
     <string name="move_file">Move</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_delete">Delete</string>
+    <string name="open_file_action">Open File</string>
+    <string name="file_detail_size">Size</string>
+    <string name="file_detail_modified">Modified</string>
+    <string name="file_detail_path">Path</string>
+    <string name="file_detail_sha256">SHA-256 Checksum</string>
     <string name="version_label">Version: %1$s</string>
     <string name="sha256_verified_title">SHA-256 Verified (Integrity OK)</string>
     <string name="sha256_hash_label">SHA-256 Hash</string>
@@ -208,11 +236,83 @@
     <string name="power_saver_sub">Screen dimmed to prevent OLED burn-in and save energy</string>
     <string name="wake_up_prompt">Press any remote button to wake up</string>
 
+    <!-- Settings Screen -->
+    <string name="settings_title">Application Settings</string>
+    <string name="settings_subtitle">Configure server, auto-history, theme and storage preferences</string>
+    <string name="setting_server_title">HTTP Web Server</string>
+    <string name="setting_server_desc">Allow wireless transfers from phones and laptops on the same Wi-Fi</string>
+    <string name="setting_auto_history_title">Auto-Add Transferred Files to History</string>
+    <string name="setting_auto_history_desc">Automatically record newly received files into the local Room database</string>
+    <string name="setting_theme_title">Display Theme Mode</string>
+    <string name="setting_theme_desc">Switch between Cyber Neon Dark, Material 3 Light, or System Dynamic theme</string>
+    <string name="theme_dark">Dark (OLED)</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dynamic">Dynamic M3</string>
+    <string name="setting_cache_title">Clean Temporary Files</string>
+    <string name="setting_cache_desc">Free up transfer cache and thumbnail memory</string>
+    <string name="setting_privacy_title">100% Local &amp; Private</string>
+    <string name="setting_privacy_desc">All file transfers stay strictly on your local Wi-Fi network</string>
+
+    <!-- Low Power Warning -->
+    <string name="low_power_warning_title">Low Power Mode Active</string>
+    <string name="low_power_warning_sub">Large file transfer in progress on low battery</string>
+    <string name="low_power_warning_desc">Battery is low (%1$d%%) while a large file transfer (%2$s) is in progress. Connect your charger to prevent transfer failure.</string>
+    <string name="low_power_warning_dismiss">Acknowledge</string>
+    <string name="setting_battery_title">Battery &amp; Low Power Safety</string>
+    <string name="setting_battery_desc">Monitor battery status and large file transfer protection warnings</string>
+    <string name="simulate_low_battery_title">Simulate Low Battery (Test Warning)</string>
+    <string name="simulate_low_battery_desc">Force battery warning UI to simulate active low battery state during transfers</string>
+
     <!-- Remote Navigation Shortcuts Bar -->
+    <string name="key_hint_navigate">Navigate</string>
+    <string name="key_hint_select">Select / Open</string>
+    <string name="key_hint_back">Return / Parent</string>
     <string name="tv_remote_dpad">D-Pad: Navigate</string>
     <string name="tv_remote_select">Center/OK: Select</string>
     <string name="tv_remote_back">Back: Return</string>
     <string name="tv_remote_menu">Menu: Options</string>
+    <string name="remote_feature_tag">Beam TV • High-Speed LAN Transfer</string>
+
+    <!-- Additional UI & Legend Strings -->
+    <string name="legend_photos">Photos</string>
+    <string name="legend_videos">Videos</string>
+    <string name="legend_audio">Audio</string>
+    <string name="legend_docs">Docs</string>
+    <string name="legend_apks">APKs</string>
+    <string name="legend_system_apps">System &amp; Apps</string>
+    <string name="legend_free_space">Free Space</string>
+
+    <string name="open_web_beam">Open Web Beam</string>
+    <string name="recently_received_files">Recently Received Files</string>
+    <string name="no_transfers_recorded">No transfers recorded yet</string>
+    <string name="storage_root">Storage Root</string>
+    <string name="category_filter_count">Category Filter • %1$d items</string>
+    <string name="staged_destination">Destination: %1$s</string>
+    <string name="calculating_sha256">Calculating SHA-256...</string>
+
+    <string name="server_active_badge">HTTP BEAM SERVER ACTIVE</string>
+    <string name="server_offline_badge">SERVER OFFLINE</string>
+    <string name="server_click_to_start">Click to Start Server</string>
+    <string name="how_to_beam_title">How to Beam Files</string>
+    <string name="beam_step_1_title">Connect to Wi-Fi</string>
+    <string name="beam_step_1_desc">Ensure phone/PC is on the same local network</string>
+    <string name="beam_step_2_title">Scan QR or Open URL</string>
+    <string name="beam_step_2_desc">Scan above code with camera or visit URL in browser</string>
+    <string name="beam_step_3_title">Send Files &amp; Text</string>
+    <string name="beam_step_3_desc">Drag &amp; drop files or send clipboard text seamlessly</string>
+    <string name="awaiting_transfers_title">Awaiting Incoming Transfers</string>
+
+    <string name="status_charging">%1$d%% ⚡ CHARGING</string>
+    <string name="status_low_battery">%1$d%% LOW BATTERY</string>
+    <string name="status_battery_ok">%1$d%% BATTERY OK</string>
+    <string name="status_enabled">ENABLED</string>
+    <string name="status_disabled">DISABLED</string>
+    <string name="status_running">RUNNING</string>
+    <string name="status_stopped">STOPPED</string>
+    <string name="server_active_at">Active at %1$s</string>
+    <string name="server_stopped_click">Server stopped • Click to start</string>
+    <string name="delete_file_confirm">Delete File?</string>
+    <string name="delete_folder_confirm">Delete Folder?</string>
 
     <!-- Toasts & Alerts -->
     <string name="toast_transfer_complete_title">Transfer Complete</string>
@@ -223,4 +323,239 @@
     <string name="toast_files_deleted_msg">Deleted %1$d files (%2$s freed)</string>
     <string name="toast_connection_lost_title">Connection Lost</string>
     <string name="toast_connection_lost_msg">Local Wi-Fi disconnected. Beam server paused.</string>
+
+    <!-- File Browser Filter Chips & Refactored Strings -->
+    <string name="filter_by_label">Filter By:</string>
+    <string name="filter_all_files">All Files</string>
+    <string name="filter_images">Images</string>
+    <string name="filter_videos">Videos</string>
+    <string name="filter_documents">Documents</string>
+    <string name="filter_audio">Audio</string>
+    <string name="cat_all_files">All Files</string>
+    <string name="delete_batch_more_items"> and %1$d more</string>
+    <string name="query_label">Query: \"%1$s\"</string>
+
+    <!-- System Toasts -->
+    <string name="toast_auto_history_enabled">Auto-record to history enabled</string>
+    <string name="toast_auto_history_disabled">Auto-record to history disabled</string>
+    <string name="toast_sha256_copied">SHA-256 Checksum Copied</string>
+    <string name="toast_copied_to_clipboard">Copied to clipboard: %1$s</string>
+    <string name="toast_file_not_found">File no longer exists at %1$s</string>
+    <string name="toast_no_app_found">No compatible app found to open %1$s</string>
+    <string name="toast_history_cleared">Transfer history cleared</string>
+    <string name="toast_cache_cleaned">Cache cleaned (%1$s freed)</string>
+    <string name="toast_simulated_low_battery_enabled">Simulated Low Battery mode enabled (Warning active)</string>
+    <string name="toast_simulated_low_battery_disabled">Simulated Low Battery mode disabled</string>
+
+    <!-- Foreground Service Strings -->
+    <string name="service_server_active_title">Beam Server Active</string>
+    <string name="service_server_running_desc">Server running at %1$s</string>
+    <string name="service_receiving_file_title">Receiving: %1$s</string>
+    <string name="service_ready_desc">Ready for incoming file transfers</string>
+
+    <!-- Fallback Resource Defaults for Localization Support -->
+    <string name="about_subtitle">Wireless File Manager for Android TV</string>
+    <string name="about_title">About Beam</string>
+    <string name="active_transfers">Active Transfers</string>
+    <string name="auto_clean_old_files">Auto Clean Temporary Files</string>
+    <string name="auto_clean_old_files_desc">Automatically clear old transfer cache when storage is low</string>
+    <string name="batch_select">Batch Select</string>
+    <string name="bulk_delete">Bulk Delete</string>
+    <string name="bulk_move">Bulk Move</string>
+    <string name="category_all">All Categories</string>
+    <string name="category_apks">APKs</string>
+    <string name="category_documents">Documents</string>
+    <string name="category_music">Music</string>
+    <string name="category_photos">Photos</string>
+    <string name="category_videos">Videos</string>
+    <string name="category_zip">ZIP Archives</string>
+    <string name="clean_now">Clean Now</string>
+    <string name="clean_now_desc">Free cache memory</string>
+    <string name="clear_all_clips">Clear All Clips</string>
+    <string name="clear_log">Clear Log</string>
+    <string name="clear_selection">Clear Selection</string>
+    <string name="close">Close</string>
+    <string name="connect_wifi_prompt">Connect TV to Wi-Fi</string>
+    <string name="copy">Copy</string>
+    <string name="copy_link">Copy Link</string>
+    <string name="copy_to_tv_clipboard">Copy to TV Clipboard</string>
+    <string name="delete">Delete</string>
+    <string name="delete_folder">Delete Folder</string>
+    <string name="delete_permanently">Delete Permanently</string>
+    <string name="delete_permanently_desc">Item will be permanently removed</string>
+    <string name="delete_warning_file">Are you sure you want to delete this file?</string>
+    <string name="delete_warning_folder">Are you sure you want to delete this folder and its contents?</string>
+    <string name="devices_on_network">Devices on Network</string>
+    <string name="download_dir">Downloads Directory</string>
+    <string name="extract">Extract</string>
+    <string name="extract_archive">Extract Archive</string>
+    <string name="extract_zip">Extract ZIP</string>
+    <string name="from_client_date">From Client Date</string>
+    <string name="go_to_qr">Go to QR Code</string>
+    <string name="high_contrast_dark">High Contrast OLED Theme</string>
+    <string name="high_contrast_dark_desc">Optimized dark palette for TV screens</string>
+    <string name="history_log_desc">Record of all incoming file transfers</string>
+    <string name="history_log_title">Transfer History Log</string>
+    <string name="incoming_transfer">Incoming File Transfer</string>
+    <string name="install">Install</string>
+    <string name="install_package">Install Package</string>
+    <string name="later">Later</string>
+    <string name="loading">Loading...</string>
+    <string name="local_network_offline">Local Network Offline</string>
+    <string name="move_here">Move Here</string>
+    <string name="move_relocate">Relocate Files</string>
+    <string name="move_relocate_desc">Move selected items to another directory</string>
+    <string name="nav_apks">APKs</string>
+    <string name="nav_beam">Web Beam</string>
+    <string name="nav_files">Files</string>
+    <string name="nav_help">Help</string>
+    <string name="nav_history">History</string>
+    <string name="nav_remote">Remote Navigation</string>
+    <string name="new_name">New Name</string>
+    <string name="next_step">Next Step</string>
+    <string name="no_clips_desc">Clipboard clips received from phone/PC will appear here</string>
+    <string name="no_clips_received">No clips received</string>
+    <string name="no_clips_yet">No Clips Yet</string>
+    <string name="no_devices_found">No devices found on network</string>
+    <string name="no_files_found">No Files Found</string>
+    <string name="no_history_desc">Your transfer history is empty</string>
+    <string name="no_history_recorded">No history recorded</string>
+    <string name="no_history_yet">No History Yet</string>
+    <string name="no_recent_downloads">No recent downloads</string>
+    <string name="no_recent_files">No Recent Files</string>
+    <string name="no_recent_files_desc">Received files will appear here</string>
+    <string name="no_thanks">No thanks</string>
+    <string name="offline">Offline</string>
+    <string name="online">Online</string>
+    <string name="open">Open</string>
+    <string name="open_file">Open File</string>
+    <string name="open_folder">Open Folder</string>
+    <string name="open_in_browser">Open in Browser</string>
+    <string name="open_link">Open Link</string>
+    <string name="options">Options</string>
+    <string name="power_saver">Power Saver</string>
+    <string name="power_saver_active">Power Saver Active</string>
+    <string name="power_saver_desc">Low power mode detected</string>
+    <string name="power_saver_sub">Battery conservation enabled</string>
+    <string name="press_to_copy">Press to copy</string>
+    <string name="private_local_desc">All transfers are private and stay within your local Wi-Fi</string>
+    <string name="private_local_title">100% Private &amp; Offline</string>
+    <string name="quick_access">Quick Access</string>
+    <string name="quick_guide_desc">Quick guide for TV file beaming</string>
+    <string name="quick_guide_title">Quick Guide</string>
+    <string name="quick_preview_desc">Preview file details, size, and hash</string>
+    <string name="rate">Rate App</string>
+    <string name="rate_beam">Rate Beam</string>
+    <string name="rate_beam_desc">If you enjoy using Beam, please rate us!</string>
+    <string name="rate_sub">Feedback &amp; Rating</string>
+    <string name="rate_title">Rate Beam App</string>
+    <string name="ready_to_receive">Ready to receive transfers</string>
+    <string name="received_text_clips">Received Text Clips</string>
+    <string name="recent_downloads">Recent Downloads</string>
+    <string name="recent_section_desc">Recently beamed files</string>
+    <string name="recent_section_title">Recent Section</string>
+    <string name="refresh">Refresh</string>
+    <string name="remote_clipboard">Remote Clipboard</string>
+    <string name="remote_clipboard_desc">Copy text from phone/PC directly to TV</string>
+    <string name="remote_screen_desc">Remote control navigation guide</string>
+    <string name="remote_screen_title">Remote Controls</string>
+    <string name="rename">Rename</string>
+    <string name="rename_desc">Rename this file or folder</string>
+    <string name="replay_tutorial">Replay Tutorial</string>
+    <string name="replay_tutorial_desc">Watch the onboarding guide again</string>
+    <string name="save">Save</string>
+    <string name="save_name">Save Name</string>
+    <string name="scan_qr_desc">Scan QR code using phone camera</string>
+    <string name="search">Search</string>
+    <string name="search_placeholder">Search files...</string>
+    <string name="select_destination">Select Destination</string>
+    <string name="server_port">Server Port</string>
+    <string name="settings_desc">Application Settings</string>
+    <string name="settings_pref_desc">Manage Beam preferences</string>
+    <string name="settings_pref_title">Preferences</string>
+    <string name="share">Share</string>
+    <string name="share_beam">Share Beam</string>
+    <string name="share_beam_desc">Share Beam server link with other devices</string>
+    <string name="share_desc">Share this file</string>
+    <string name="share_title">Share File</string>
+    <string name="skip_tutorial">Skip Tutorial</string>
+    <string name="sort_type">Sort Type</string>
+    <string name="start_beaming">Start Beaming</string>
+    <string name="step1_instruction">Connect TV and phone to the same Wi-Fi network</string>
+    <string name="step1_sub">Wi-Fi Connection</string>
+    <string name="step1_title">Step 1</string>
+    <string name="step2_instruction">Scan the QR code or open the URL in your browser</string>
+    <string name="step2_sub">Scan or Type URL</string>
+    <string name="step2_title">Step 2</string>
+    <string name="storage_active_badge">ACTIVE DRIVE</string>
+    <string name="storage_internal">Internal Storage</string>
+    <string name="storage_management">Storage Management</string>
+    <string name="storage_management_desc">Manage internal and external drive storage</string>
+    <string name="storage_set_active">Set Active Drive</string>
+    <string name="storage_usb">USB Drive</string>
+    <string name="submit_stars">Submit Rating</string>
+    <string name="transfer_history">Transfer History</string>
+    <string name="transfer_history_desc">View all past file transfers</string>
+    <string name="view">View</string>
+    <string name="view_all">View All</string>
+    <string name="visit_url_browser">Visit URL in Browser</string>
+    <string name="wake_up_prompt">Wake Up TV Server</string>
+    <string name="welcome_instruction">Welcome to Beam TV File Manager</string>
+    <string name="welcome_sub">Fast wireless file transfers for Android TV</string>
+    <string name="welcome_title">Welcome</string>
+    <string name="whats_new_desc">What\'s new in this release</string>
+    <string name="whats_new_title">What\'s New</string>
+
+    <!-- Dedicated Empty State & Onboarding Strings -->
+    <string name="empty_state_file_browser_title">No Files Beamed Yet</string>
+    <string name="empty_state_file_browser_desc">Your TV storage is clean! Connect your phone or laptop to local Wi-Fi to beam photos, videos, or documents directly to your TV.</string>
+    <string name="empty_state_search_title">No Files Match \"%1$s\"</string>
+    <string name="empty_state_search_desc">Check your spelling or try searching with a different keyword.</string>
+    <string name="empty_state_history_title">No Transfer History Yet</string>
+    <string name="empty_state_history_desc">Files and clipboard clips received via Web Beam will automatically appear here.</string>
+    <string name="btn_go_to_web_beam">Start Web Beam Server</string>
+    <string name="btn_show_all_files">Show All Files</string>
+    <string name="onboarding_tip_title">Quick Beaming Guide:</string>
+    <string name="onboarding_step_1">1. Connect phone or PC to same Wi-Fi network</string>
+    <string name="onboarding_step_2">2. Scan QR code or open URL in browser</string>
+    <string name="onboarding_step_3">3. Drop files to transfer directly to TV</string>
+
+    <!-- Column Headers & Sort Order Indicators -->
+    <string name="header_column_name">Name</string>
+    <string name="header_column_date">Date Modified</string>
+    <string name="header_column_size">File Size</string>
+    <string name="header_column_category">Type</string>
+
+    <!-- Notifications & Toast Messages -->
+    <string name="notification_receiving">Receiving: %1$s</string>
+    <string name="notification_sending">Sending: %1$s</string>
+    <string name="notification_progress_detail">%1$d%% (%2$s / %3$s) • %4$s • %5$s</string>
+    <string name="notification_server_active">Beam Server Active</string>
+    <string name="notification_server_ready">Ready for incoming file transfers</string>
+    <string name="toast_beamed">Beamed: %1$s (%2$s)</string>
+    <string name="remote_clipboard_title">Remote Clipboard Text</string>
+    <string name="toast_remote_clipboard_received">Received remote clipboard text!</string>
+    <string name="toast_history_item_removed">Removed from transfer history</string>
+
+    <!-- QR Share, Media Metadata & Storage Cleanup -->
+    <string name="share_qr_title">Share via QR Code</string>
+    <string name="share_qr_subtitle">Scan with phone or tablet to connect or download directly</string>
+    <string name="share_qr_btn">Share via QR</string>
+    <string name="media_detail_resolution">Resolution</string>
+    <string name="media_detail_bitrate">Bitrate</string>
+    <string name="media_detail_duration">Duration</string>
+    <string name="cleanup_scanner_title">Storage Cleanup &amp; Scanner</string>
+    <string name="cleanup_scanner_subtitle">Scan for redundant temporary files, logs, and stale caches</string>
+    <string name="btn_scan_storage">Scan Storage</string>
+    <string name="scanning_junk_files">Scanning storage for junk and temporary files...</string>
+    <string name="cleanup_app_cache">App &amp; Thumbnail Cache</string>
+    <string name="cleanup_temp_logs">Temporary Files &amp; Logs</string>
+    <string name="cleanup_stale_downloads">Stale / Incomplete Downloads</string>
+    <string name="total_junk_found">Total Reclaimable Space</string>
+    <string name="one_click_cleanup_action">One-Click Cleanup</string>
+    <string name="delete_large_file_title">Delete Large File?</string>
+    <string name="toast_cleanup_success">Cleanup complete! Freed %1$s</string>
+    <string name="showing_top_large_files">Showing largest files</string>
+    <string name="no_large_files_found">No large files found on storage</string>
+    <string name="dialog_done">Done</string>
 </resources>
