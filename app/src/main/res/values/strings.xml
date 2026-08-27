@@ -428,4 +428,13 @@
     <string name="showing_top_large_files">Showing largest files</string>
     <string name="no_large_files_found">No large files found on storage</string>
     <string name="dialog_done">Done</string>
+
+    <!-- Permissions & Onboarding Guide -->
+    <string name="permission_step_title">Storage Access Required</string>
+    <string name="permission_step_sub">Grant Permission for TV File Management</string>
+    <string name="permission_step_instruction">To receive, save, organize, and install APK applications, movies, music, and documents on your Android TV, Beam requires storage access.</string>
+    <string name="permission_grant_btn">Grant Storage Access</string>
+    <string name="permission_granted_badge">Permission Granted</string>
+    <string name="permission_badge">PERMISSIONS</string>
+    <string name="permission_granted_instruction">Storage access is active! Beam is ready to save files and install apps on your TV.</string>
 </resources>
